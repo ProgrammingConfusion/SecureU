@@ -1,1 +1,13 @@
-<?php echo "This is my registration page"; ?>
+<?php
+
+$pagetitle = 'Registration';
+
+include "header.php";
+
+?>
+
+
+
+
+<?php include "footer.php"; ?>
+

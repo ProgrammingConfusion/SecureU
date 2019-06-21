@@ -1,1 +1,14 @@
-<?php echo "This is my login page"; ?>
+<?php
+
+$pagetitle = 'Login';
+
+include "header.php";
+
+?>
+
+
+
+
+<?php include "footer.php"; ?>
+
+
