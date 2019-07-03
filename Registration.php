@@ -7,7 +7,29 @@ include "header.php";
 ?>
 
 <?php if (isset($_POST["registration"])) {
-    echo "registered";
+
+    require "dbconnect.php";
+
+    $email = $_POST["email"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $user_role = $_POST["user_role"];
+
+
+
+    $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
+     VALUES (NULL, '$email', '$username', '$password', '$first_name', '$last_name', '', '$user_role', CURRENT_TIMESTAMP);";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Thank you for registering.";
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+
+    mysqli_close($conn);
 } ?>
 
 <h1>Registration</h1>
@@ -21,10 +43,10 @@ include "header.php";
     <input type="text" name="username"><br>
 
     Password <br>
-    <input type="password" name="password"><br>
+    <input type="password" name="password" id="password"><br>
 
     Confirm Password <br>
-    <input type="password" name="confirm_password"><br>
+    <input type="password" name="confirm_password" id="confirm_password"><br>
 
     First Name <br>
     <input type="text" name="first_name"><br>
@@ -39,12 +61,29 @@ include "header.php";
         <option value="student">Student</option>
         <option value="teacher">Teacher</option>
     </select><br>
+    <br>
+
 
     <input type="submit" name="registration" value="Register">
 
 </form>
 
 
+<script>
+    var password = document.getElementById("password"),
+        confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
 
 
 <?php include "footer.php"; ?>
