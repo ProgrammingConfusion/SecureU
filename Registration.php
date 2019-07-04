@@ -10,13 +10,13 @@ include "header.php";
 
     require "dbconnect.php";
 
-    $email = $_POST["email"];
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $email = mysqli_real_escape_string($conn, trim($_POST["email"]));
+    $username = mysqli_real_escape_string($conn, trim($_POST["username"]));
+    $password = mysqli_real_escape_string($conn, trim($_POST["password"]));
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $first_name = $_POST["first_name"];
-    $last_name = $_POST["last_name"];
-    $user_role = $_POST["user_role"];
+    $first_name = mysqli_real_escape_string($conn, trim($_POST["first_name"]));
+    $last_name = mysqli_real_escape_string($conn, trim($_POST["last_name"]));
+    $user_role = mysqli_real_escape_string($conn, trim($_POST["user_role"]));
 
 
 
