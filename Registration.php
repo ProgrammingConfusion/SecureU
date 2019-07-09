@@ -71,7 +71,7 @@ include "header.php";
 
 </form>
 
-
+<!-- Script to validate if password and confirm password fields are the same -->
 <script>
     var password = document.getElementById("password"),
         confirm_password = document.getElementById("confirm_password");
