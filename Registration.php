@@ -2,11 +2,11 @@
 
 $pagetitle = 'Registration';
 
-include "header.php";
 
-?>
 
-<?php if (isset($_POST["registration"])) {
+
+
+if (isset($_POST["registration"])) {
 
     require "dbconnect.php";
 
@@ -30,7 +30,10 @@ include "header.php";
     }
 
     mysqli_close($conn);
-} ?>
+}
+
+include "header.php";
+?>
 
 <h1>Registration</h1>
 
