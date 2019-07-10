@@ -8,7 +8,7 @@ $page_title = 'Registration';
 
 if (isset($_POST["registration"])) {
 
-    require "dbconnect.php";
+    require "db_connect.php";
 
     $email = mysqli_real_escape_string($conn, trim($_POST["email"]));
     $username = mysqli_real_escape_string($conn, trim($_POST["username"]));

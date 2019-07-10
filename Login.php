@@ -1,11 +1,11 @@
 <?php
 
-$pagetitle = 'Login';
+$page_title = 'Login';
 
 session_start();
 
 if (isset($_POST["login"])) {
-    require "dbconnect.php";
+    require "db_connect.php";
 
     $username = mysqli_real_escape_string($conn, trim($_POST["username"]));
     $password = mysqli_real_escape_string($conn, trim($_POST["password"]));
@@ -34,7 +34,7 @@ if (isset($_POST["login"])) {
             }
         }
     } else {
-        echo "0 results";
+        echo "No account with that username exists.";
     }
 }
 
