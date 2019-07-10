@@ -2,6 +2,10 @@
 
 session_start();
 
+if (!isset($_SESSION["user_id"])) {
+    header("location: login.php");
+}
+
 $page_title = "Add Course";
 
 if (isset($_POST["create_course"])) {

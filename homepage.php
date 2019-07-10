@@ -1,7 +1,9 @@
 <?php
 session_start();
 
-
+if (!isset($_SESSION["user_id"])) {
+    header("location: login.php");
+}
 
 
 
@@ -30,7 +32,7 @@ if (isset($_SESSION["user_id"])); {
 <a href="add_courses.php">Create Course</a>
 <br>
 
-<a href="logout.php">Logout</a>
+
 
 <?php
 include "footer.php";
