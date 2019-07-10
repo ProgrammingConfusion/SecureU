@@ -1,6 +1,6 @@
 <?php
 
-$pagetitle = 'Registration';
+$page_title = 'Registration';
 
 
 
@@ -16,12 +16,13 @@ if (isset($_POST["registration"])) {
     $password = password_hash($password, PASSWORD_DEFAULT);
     $first_name = mysqli_real_escape_string($conn, trim($_POST["first_name"]));
     $last_name = mysqli_real_escape_string($conn, trim($_POST["last_name"]));
+    $date_of_birth = $_POST["date_of_birth"];
     $user_role = mysqli_real_escape_string($conn, trim($_POST["user_role"]));
 
 
 
     $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
-     VALUES (NULL, '$email', '$username', '$password', '$first_name', '$last_name', '', '$user_role', CURRENT_TIMESTAMP);";
+     VALUES (NULL, '$email', '$username', '$password', '$first_name', '$last_name', '$date_of_birth', '$user_role', CURRENT_TIMESTAMP);";
 
     if (mysqli_query($conn, $sql)) {
         echo "Thank you for registering.";
@@ -56,6 +57,9 @@ include "header.php";
 
     Last Name <br>
     <input type="text" name="last_name"><br>
+
+    Date of Birth <br>
+    <input type="date" name="date_of_birth"><br>
     <br>
 
 
