@@ -28,7 +28,7 @@ if (isset($_POST["login"])) {
                 $_SESSION["username"] = $row["username"];
                 $_SESSION["email"] = $row["email"];
                 $_SESSION["user_role"] = $row["user_role"];
-                header("location: home.php");
+                header("location: homepage.php");
             } else {
                 echo "Incorrect login credentials";
             }
