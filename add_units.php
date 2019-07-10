@@ -16,10 +16,10 @@ if (isset($_POST["create_unit"])) {
 
     require "db_connect.php";
 
-    $course_id = $_POST["course_id"];
-    $unit_name = $_POST["unit_name"];
-    $unit_num = $_POST["unit_num"];
-    $unit_desc = $_POST["unit_desc"];
+    $course_id = mysqli_real_escape_string($conn, trim($_POST["course_id"]));
+    $unit_name = mysqli_real_escape_string($conn, trim($_POST["unit_name"]));
+    $unit_num = mysqli_real_escape_string($conn, trim($_POST["unit_num"]));
+    $unit_desc = mysqli_real_escape_string($conn, trim($_POST["unit_desc"]));
 
     $sql = "INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `unit_type`, `content_id`, `quiz_id`, `course_id`)
      VALUES (NULL, '$unit_name', '$unit_num', '$unit_desc', '', '', '', '$course_id');";
