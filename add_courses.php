@@ -31,6 +31,8 @@ if (isset($_POST["create_course"])) {
 
 include "header.php"; ?>
 
+<?php include "nav.php"; ?>
+
 <h2> Create Course</h2>
 
 <form action="add_courses.php" method="post">

@@ -35,6 +35,8 @@ if (isset($_POST["add_content"])) {
 include "header.php";
 ?>
 
+<?php include "nav.php"; ?>
+
 <form action="add_content.php" method="post">
 
     <p>Unit ID</p>

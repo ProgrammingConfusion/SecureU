@@ -5,13 +5,13 @@ if (!isset($_SESSION["user_id"])) {
     header("location: login.php");
 }
 
-
+$page_title = "Homepage";
 
 include "header.php";
 ?>
 
 
-
+<?php include "navbar.php"; ?>
 
 <?php
 
