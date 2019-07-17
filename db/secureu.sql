@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2019 at 02:39 PM
+-- Generation Time: Jul 17, 2019 at 04:01 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -21,6 +21,78 @@ SET time_zone = "+00:00";
 --
 -- Database: `secureu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `content`
+--
+
+CREATE TABLE `content` (
+  `content_id` int(11) NOT NULL,
+  `content_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_num` int(11) NOT NULL,
+  `content_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_code` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `content`
+--
+
+INSERT INTO `content` (`content_id`, `content_name`, `content_num`, `content_type`, `content_code`, `unit_id`) VALUES
+(5, 'How Password Managers Work', 1, 'video', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DI72oBhMgWs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 3),
+(6, 'How Password Managers Work', 1, 'video', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DI72oBhMgWs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `course_id` int(11) NOT NULL,
+  `course_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_desc` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_img` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course_status` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `course_name`, `course_desc`, `course_img`, `course_status`, `date_created`, `user_id`) VALUES
+(3, 'Anti-Phishing', 'Learn how to avoid Phishing Attacks', '', '', '2019-07-09 23:27:57', 11),
+(5, 'Password Manager', 'Learn about Password Managers and how to use them', '', '', '2019-07-10 02:56:40', 11),
+(6, '2-Factor Authentication', 'Learn how 2-Factor Authentication works and which one you should use', '', '', '2019-07-10 02:58:39', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `units`
+--
+
+CREATE TABLE `units` (
+  `unit_id` int(11) NOT NULL,
+  `unit_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_num` int(11) NOT NULL,
+  `unit_desc` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_id` int(11) NOT NULL,
+  `quiz_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `unit_type`, `content_id`, `quiz_id`, `course_id`) VALUES
+(3, 'Introduction to Password Managers', 1, 'An Introduction into how Password Managers work', '', 0, 0, 5);
 
 -- --------------------------------------------------------
 
@@ -46,11 +118,30 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`) VALUES
 (3, 'a@a.com', 'a', '$2y$10$bBI2aLNnm9rzKEkTPKe8mOe5RGYB8gE/tA2Vp9X/c5/JdwP.6IT.G', 'a', 'a', '0000-00-00', 'student', '2019-07-03 15:15:18'),
-(7, 'a@a.com', '\'/a/\'', '$2y$10$SurE/r/fj.lSF6QgIblM8OmwQoL4YfdyG8ThepfTuUEkV6sejJBVy', 'a', 'a', '0000-00-00', 'student', '2019-07-04 19:49:29');
+(11, 'b@b.com', 'b', '$2y$10$5C1sZAutbhu2Su3FOKdKCuKGxpBKpAZ3z9TZ5FbrfxSz6Ay8A61QK', 'b', 'b', '1995-05-19', 'teacher', '2019-07-09 22:29:37'),
+(12, 'c@c.com', 'c', '$2y$10$VAjW7SC2HBg6MZee6AA9PeTQhWokfUVL4HEYLusVQ5aAH3NBJ9P7y', 'c', 'c', '2019-07-17', 'teacher', '2019-07-10 02:57:25');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `content`
+--
+ALTER TABLE `content`
+  ADD PRIMARY KEY (`content_id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `units`
+--
+ALTER TABLE `units`
+  ADD PRIMARY KEY (`unit_id`);
 
 --
 -- Indexes for table `users`
@@ -63,10 +154,28 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `content`
+--
+ALTER TABLE `content`
+  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `units`
+--
+ALTER TABLE `units`
+  MODIFY `unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
