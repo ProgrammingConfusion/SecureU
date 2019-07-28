@@ -36,7 +36,7 @@ if (isset($_POST["create_unit"])) {
 
 include "header.php"; ?>
 
-<?php include "nav.php"; ?>
+<?php include "navbar.php"; ?>
 
 <h2> Create Unit</h2>
 

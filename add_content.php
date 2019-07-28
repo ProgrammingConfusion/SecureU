@@ -35,7 +35,7 @@ if (isset($_POST["add_content"])) {
 include "header.php";
 ?>
 
-<?php include "nav.php"; ?>
+<?php include "navbar.php"; ?>
 
 <form action="add_content.php" method="post">
 
