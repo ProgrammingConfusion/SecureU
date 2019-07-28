@@ -104,6 +104,20 @@ include "navbar.php";
 
                     $course_name = $row["course_name"];
                     $course_desc = $row["course_desc"];
+                    ?>
+
+                    <div class="col-lg-6 mbr-col-md-10">
+                        <div class="wrap">
+                            <div class="ico-wrap">
+                                <span class="fas fa-5x mr-5 fa-user-shield"></span>
+                            </div>
+                            <div class="text-wrap vcenter">
+                                <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><?php echo $course_name; ?></span></h2>
+                                <p class="mbr-fonts-style text1 mbr-text display-6"><?php echo $course_desc; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php
                 }
             } else {
                 echo "0 results";
@@ -112,17 +126,7 @@ include "navbar.php";
             ?>
 
 
-            <div class="col-lg-6 mbr-col-md-10">
-                <div class="wrap">
-                    <div class="ico-wrap">
-                        <span class="fas fa-5x mr-5 fa-user-shield"></span>
-                    </div>
-                    <div class="text-wrap vcenter">
-                        <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><?php echo $course_name; ?></span></h2>
-                        <p class="mbr-fonts-style text1 mbr-text display-6"><?php echo $course_desc; ?></p>
-                    </div>
-                </div>
-            </div>
+
 
 
 
