@@ -13,6 +13,6 @@ include "header.php";
 ?>
 <!-- page specific styling goes here -->
 
-<?php include "nav.php"; ?>
+<?php include "navbar.php"; ?>
 
 <!-- content for the page starts here -->
