@@ -79,6 +79,10 @@ include "header.php";
         font-family: 'Source Sans Pro', sans-serif;
         font-size: 1re
     }
+
+    a {
+        color: inherit;
+    }
 </style>
 
 <?php
@@ -102,20 +106,26 @@ include "navbar.php";
                 // output data of each row
                 while ($row = mysqli_fetch_assoc($result)) {
 
+                    $course_id = $row["course_id"];
                     $course_name = $row["course_name"];
                     $course_desc = $row["course_desc"];
+                    $course_link = "units.php?course_id=$course_id";
                     ?>
 
                     <div class="col-lg-6 mbr-col-md-10">
-                        <div class="wrap">
-                            <div class="ico-wrap">
-                                <span class="fas fa-5x mr-5 fa-user-shield"></span>
+
+                        <a style="text-decoration:none" href="<?php echo $course_link; ?>">
+                            <div class="wrap">
+
+                                <div class="ico-wrap">
+                                    <span class="fas fa-5x mr-5 fa-user-shield"></span>
+                                </div>
+                                <div class="text-wrap vcenter">
+                                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><?php echo $course_name; ?></span></h2>
+                                    <p class="mbr-fonts-style text1 mbr-text display-6"><?php echo $course_desc; ?></p>
+                                </div>
                             </div>
-                            <div class="text-wrap vcenter">
-                                <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><?php echo $course_name; ?></span></h2>
-                                <p class="mbr-fonts-style text1 mbr-text display-6"><?php echo $course_desc; ?></p>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 <?php
                 }
