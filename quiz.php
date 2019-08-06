@@ -11,12 +11,18 @@ $page_title = "Quiz";
 
 require "db_connect.php";
 
-//hardcoding temp for testing
-$quiz_id = 1;
-$unit_id = 8;
-$attempt_id = 1;
-$quiz_question_num = 2;
-$quiz_question_total = 3;
+//Make sure you came from instructions page by checking for session variables
+
+if (isset($_SESSION["attempt_id"])) {
+
+
+    $attempt_id = $_SESSION["attempt_id"];
+    $attempt_score = $_SESSION["attempt_score"];
+    $quiz_id = $_SESSION["quiz_id"];
+    $quiz_question_num = $_SESSION["quiz_question_num"];
+    $quiz_question_total = $_SESSION["quiz_question_total"];
+}
+
 
 //default values for page before interaction
 $feedback_icon = "fas fa-edit fa-2x";
@@ -24,17 +30,6 @@ $feedback_message = "";
 //empty string so that response does not display until it is set
 $response = "";
 $button = "Submit";
-//checking if coming to page for the first time
-if (isset($_SESSION["quiz_question_num"])) {
-    $quiz_question_num = $_SESSION["quiz_question_num"];
-} else {
-    //if you have just gotten to this page, start from question 1
-    $quiz_question_num = 1;
-    $_SESSION["quiz_question_num"] = $quiz_question_num;
-    $attempt_score = 0;
-    $_SESSION["attempt_score"] = 0;
-    $_SESSION["attempt_id"] = 1;
-}
 
 
 if (isset($_POST["submit"])) {
@@ -79,7 +74,7 @@ if (isset($_POST["continue"])) {
 }
 if ($quiz_question_num > $quiz_question_total) {
     // because questions are completed
-    echo "Finished!";
+
 
     $quiz_question_num = 1;
     $_SESSION["quiz_question_num"] = 1;
@@ -158,11 +153,11 @@ include "header.php";
         if ($correct == 1) {
             ?>
 
-                                                                                                                                            <h2>Correct! <span class="fas fa-check-square text-success"></span></h2>
+                                                                                                                                                                    <h2>Correct! <span class="fas fa-check-square text-success"></span></h2>
 <?php
 } else {
     ?>
-                                                                                                                                            <h2>Incorrect <span class="fas fa-times text-danger"></span></h2>
+                                                                                                                                                                    <h2>Incorrect <span class="fas fa-times text-danger"></span></h2>
 <?php
 }
 ?> -->
