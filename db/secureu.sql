@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2019 at 04:01 AM
+-- Generation Time: Aug 06, 2019 at 02:22 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -25,6 +25,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `attempts`
+--
+
+CREATE TABLE `attempts` (
+  `attempt_id` int(11) NOT NULL,
+  `attempt_time_elapsed` time NOT NULL,
+  `attempt_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `attempt_score` int(11) NOT NULL,
+  `attempt_credits` int(11) NOT NULL,
+  `quiz_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `attempts`
+--
+
+INSERT INTO `attempts` (`attempt_id`, `attempt_time_elapsed`, `attempt_date`, `attempt_score`, `attempt_credits`, `quiz_id`, `user_id`) VALUES
+(1, '00:00:00', '2019-08-04 15:13:47', 1, 0, 1, 11);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `content`
 --
 
@@ -42,8 +65,7 @@ CREATE TABLE `content` (
 --
 
 INSERT INTO `content` (`content_id`, `content_name`, `content_num`, `content_type`, `content_code`, `unit_id`) VALUES
-(5, 'How Password Managers Work', 1, 'video', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DI72oBhMgWs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 3),
-(6, 'How Password Managers Work', 1, 'video', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DI72oBhMgWs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 3);
+(5, 'How Password Managers Work', 1, 'video', '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/DI72oBhMgWs\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 3);
 
 -- --------------------------------------------------------
 
@@ -67,8 +89,104 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`course_id`, `course_name`, `course_desc`, `course_img`, `course_status`, `date_created`, `user_id`) VALUES
 (3, 'Anti-Phishing', 'Learn how to avoid Phishing Attacks', '', '', '2019-07-09 23:27:57', 11),
-(5, 'Password Manager', 'Learn about Password Managers and how to use them', '', '', '2019-07-10 02:56:40', 11),
+(5, 'Password Managers', 'Learn about Password Managers and how to use them', '', '', '2019-07-10 02:56:40', 11),
 (6, '2-Factor Authentication', 'Learn how 2-Factor Authentication works and which one you should use', '', '', '2019-07-10 02:58:39', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `question_id` int(11) NOT NULL,
+  `question_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question_content` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer_content` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer_a` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
+  `answer_b` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
+  `answer_c` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
+  `answer_d` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
+  `session` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `session`) VALUES
+(1, 'Fill in the blank', 'What is an opensource Password Manager?', 'Keypass', 'No answer set.', 'No answer set.', 'No answer set.', 'No answer set.', '0'),
+(2, 'True or false', 'are password managers available for mobile', 'True', 'False', 'True', 'No answer set.', 'No answer set.', '0'),
+(3, 'Multiple choice', 'What is one feature password managers do not offer?', 'None of the above', 'Suggested passwords', 'Browser extensions', 'None of the above', 'Compromised password checks', '0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quizzes`
+--
+
+CREATE TABLE `quizzes` (
+  `quiz_id` int(11) NOT NULL,
+  `quiz_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quiz_desc` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quiz_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quiz_tip` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quiz_question_total` int(11) NOT NULL,
+  `quiz_credits` int(11) NOT NULL,
+  `unit_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `quizzes`
+--
+
+INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_type`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`) VALUES
+(1, 'Password Manager Quiz 1', 'Quiz on Password Manager Basics', 'Mixed', '', 3, 0, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_questions`
+--
+
+CREATE TABLE `quiz_questions` (
+  `quiz_question_id` int(11) NOT NULL,
+  `quiz_question_num` int(11) NOT NULL,
+  `quiz_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `quiz_questions`
+--
+
+INSERT INTO `quiz_questions` (`quiz_question_id`, `quiz_question_num`, `quiz_id`, `question_id`) VALUES
+(1, 1, 1, 1),
+(2, 2, 1, 2),
+(3, 3, 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quiz_responses`
+--
+
+CREATE TABLE `quiz_responses` (
+  `response_id` int(11) NOT NULL,
+  `response_content` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `response_score` int(11) NOT NULL,
+  `quiz_question_id` int(11) NOT NULL,
+  `attempt_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `quiz_responses`
+--
+
+INSERT INTO `quiz_responses` (`response_id`, `response_content`, `response_score`, `quiz_question_id`, `attempt_id`) VALUES
+(1, '', 0, 1, 1),
+(2, '', 1, 2, 1),
+(3, '', 0, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -92,7 +210,10 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `unit_type`, `content_id`, `quiz_id`, `course_id`) VALUES
-(3, 'Introduction to Password Managers', 1, 'An Introduction into how Password Managers work', '', 0, 0, 5);
+(3, 'Introduction to Password Managers', 1, 'An Introduction into how Password Managers work', '', 0, 0, 5),
+(4, 'Phishing Explained', 1, 'Introduction of phishing attacks', '', 0, 0, 3),
+(6, 'Common Password Manager Features', 2, 'An overview of the more common Password Manager features and how they protect your accounts', '', 0, 0, 5),
+(8, 'Password Manager Quiz', 3, 'First quiz on the basics of Password Managers', '', 0, 0, 5);
 
 -- --------------------------------------------------------
 
@@ -126,6 +247,12 @@ INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `
 --
 
 --
+-- Indexes for table `attempts`
+--
+ALTER TABLE `attempts`
+  ADD PRIMARY KEY (`attempt_id`);
+
+--
 -- Indexes for table `content`
 --
 ALTER TABLE `content`
@@ -136,6 +263,30 @@ ALTER TABLE `content`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`question_id`);
+
+--
+-- Indexes for table `quizzes`
+--
+ALTER TABLE `quizzes`
+  ADD PRIMARY KEY (`quiz_id`);
+
+--
+-- Indexes for table `quiz_questions`
+--
+ALTER TABLE `quiz_questions`
+  ADD PRIMARY KEY (`quiz_question_id`);
+
+--
+-- Indexes for table `quiz_responses`
+--
+ALTER TABLE `quiz_responses`
+  ADD PRIMARY KEY (`response_id`);
 
 --
 -- Indexes for table `units`
@@ -154,6 +305,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `attempts`
+--
+ALTER TABLE `attempts`
+  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `content`
 --
 ALTER TABLE `content`
@@ -166,10 +323,34 @@ ALTER TABLE `courses`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `quizzes`
+--
+ALTER TABLE `quizzes`
+  MODIFY `quiz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `quiz_questions`
+--
+ALTER TABLE `quiz_questions`
+  MODIFY `quiz_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `quiz_responses`
+--
+ALTER TABLE `quiz_responses`
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
