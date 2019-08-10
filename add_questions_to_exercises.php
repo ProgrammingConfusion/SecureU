@@ -24,7 +24,7 @@ if (isset($_POST["add_questions"])) {
     $answer_d = mysqli_real_escape_string($conn, trim($_POST["answer_d"]));
     $user_id = $_SESSION["user_id"];
 
-    echo "$quiz_id";
+
 
 
 
@@ -48,6 +48,15 @@ if (isset($_POST["add_questions"])) {
 
         if (mysqli_query($conn, $sql)) {
             echo "New record created successfully";
+
+            $sql = "UPDATE `quizzes` SET `quiz_question_total` = 
+            (SELECT COUNT(*) FROM quiz_questions WHERE quiz_questions.quiz_id = $quiz_id) WHERE `quizzes`.`quiz_id` = $quiz_id;";
+
+            if (mysqli_query($conn, $sql)) {
+                echo "Record updated successfully";
+            } else {
+                echo "Error updating record: " . mysqli_error($conn);
+            }
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
@@ -77,6 +86,8 @@ include "header.php";
         $user_id = $_SESSION["user_id"];
 
         $sql = "SELECT * FROM quizzes, units, courses WHERE quizzes.unit_id = units.unit_id AND units.course_id = courses.course_id AND quizzes.user_id = $user_id";
+        echo $sql;
+
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -84,12 +95,12 @@ include "header.php";
             while ($row = mysqli_fetch_assoc($result)) {
 
                 $quiz_id = $row["quiz_id"];
+
                 $quiz_name = $row["quiz_name"];
-                $unit_name = $row["unit_name"];
                 $course_name = $row["course_name"];
 
                 ?>
-                <option value="<?php echo "$quiz_id" ?>"><?php echo "$course_name - $unit_name - $quiz_id - $quiz_name" ?></option>
+                <option value="<?php echo "$quiz_id" ?>"><?php echo "$course_name - $quiz_name" ?></option>
 
             <?php
             }
