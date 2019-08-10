@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2019 at 02:31 AM
+-- Generation Time: Aug 10, 2019 at 09:23 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -43,7 +43,10 @@ CREATE TABLE `attempts` (
 --
 
 INSERT INTO `attempts` (`attempt_id`, `attempt_time_elapsed`, `attempt_date`, `attempt_score`, `attempt_credits`, `quiz_id`, `user_id`) VALUES
-(1, '00:00:00', '2019-08-04 15:13:47', 1, 0, 1, 11);
+(1, '00:00:00', '2019-08-04 15:13:47', 1, 0, 1, 11),
+(2, '00:00:00', '2019-08-05 20:43:09', 2, 0, 1, 11),
+(3, '00:00:00', '2019-08-09 20:40:14', 3, 0, 1, 11),
+(4, '00:00:00', '2019-08-09 23:45:39', 0, 0, 5, 11);
 
 -- --------------------------------------------------------
 
@@ -107,17 +110,18 @@ CREATE TABLE `questions` (
   `answer_b` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
   `answer_c` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
   `answer_d` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No answer set.',
-  `session` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `session`) VALUES
-(1, 'Fill in the blank', 'What is an opensource Password Manager?', 'Keypass', 'No answer set.', 'No answer set.', 'No answer set.', 'No answer set.', '0'),
-(2, 'True or false', 'are password managers available for mobile', 'True', 'False', 'True', 'No answer set.', 'No answer set.', '0'),
-(3, 'Multiple choice', 'What is one feature password managers do not offer?', 'None of the above', 'Suggested passwords', 'Browser extensions', 'None of the above', 'Compromised password checks', '0');
+INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `user_id`) VALUES
+(1, 'Fill in the blank', 'What is an opensource Password Manager?', 'Keypass', 'No answer set.', 'No answer set.', 'No answer set.', 'No answer set.', 0),
+(2, 'True or false', 'are password managers available for mobile', 'True', 'False', 'True', 'No answer set.', 'No answer set.', 0),
+(3, 'Multiple choice', 'What is one feature password managers do not offer?', 'None of the above', 'Suggested passwords', 'Browser extensions', 'None of the above', 'Compromised password checks', 0),
+(10, ' Multiple Choice', 'What is the first thing to look for checking if a site is legitimate?', 'HTTPS in the address bar', 'URL ending with \".com\"', 'HTTPS in the address bar', 'Options for dark mode', 'If the site has any ads', 11);
 
 -- --------------------------------------------------------
 
@@ -129,19 +133,20 @@ CREATE TABLE `quizzes` (
   `quiz_id` int(11) NOT NULL,
   `quiz_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quiz_desc` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quiz_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quiz_tip` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quiz_question_total` int(11) NOT NULL,
   `quiz_credits` int(11) NOT NULL,
-  `unit_id` int(11) NOT NULL
+  `unit_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `quizzes`
 --
 
-INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_type`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`) VALUES
-(1, 'Password Manager Quiz 1', 'Quiz on Password Manager Basics', 'Mixed', '', 3, 0, 8);
+INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`, `user_id`) VALUES
+(1, 'Password Manager Quiz 1', 'Quiz on Password Manager Basics', '', 3, 0, 8, 11),
+(6, 'Basic Phishing Avoidance', 'Quiz on the easiest ways to avoid being victim to a phishing attack.', 'If you are having difficulty, view units 1 and 2.', 0, 0, 4, 11);
 
 -- --------------------------------------------------------
 
@@ -186,7 +191,13 @@ CREATE TABLE `quiz_responses` (
 INSERT INTO `quiz_responses` (`response_id`, `response_content`, `response_score`, `quiz_question_id`, `attempt_id`) VALUES
 (1, '', 0, 1, 1),
 (2, '', 1, 2, 1),
-(3, '', 0, 3, 1);
+(3, '', 0, 3, 1),
+(4, '', 1, 1, 2),
+(5, '', 1, 2, 2),
+(6, '', 0, 3, 2),
+(7, '', 1, 1, 3),
+(8, '', 1, 2, 3),
+(9, '', 1, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -308,13 +319,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attempts`
 --
 ALTER TABLE `attempts`
-  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `content`
 --
 ALTER TABLE `content`
-  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -326,25 +337,25 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `quizzes`
 --
 ALTER TABLE `quizzes`
-  MODIFY `quiz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `quiz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `quiz_questions`
 --
 ALTER TABLE `quiz_questions`
-  MODIFY `quiz_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `quiz_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `quiz_responses`
 --
 ALTER TABLE `quiz_responses`
-  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `units`
