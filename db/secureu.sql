@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2019 at 09:23 AM
+-- Generation Time: Aug 11, 2019 at 01:10 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -46,7 +46,12 @@ INSERT INTO `attempts` (`attempt_id`, `attempt_time_elapsed`, `attempt_date`, `a
 (1, '00:00:00', '2019-08-04 15:13:47', 1, 0, 1, 11),
 (2, '00:00:00', '2019-08-05 20:43:09', 2, 0, 1, 11),
 (3, '00:00:00', '2019-08-09 20:40:14', 3, 0, 1, 11),
-(4, '00:00:00', '2019-08-09 23:45:39', 0, 0, 5, 11);
+(4, '00:00:00', '2019-08-09 23:45:39', 0, 0, 5, 11),
+(5, '00:00:00', '2019-08-10 14:41:18', 4, 0, 1, 11),
+(6, '00:00:00', '2019-08-10 14:44:57', 0, 0, 1, 11),
+(7, '00:00:00', '2019-08-10 14:55:37', 0, 0, 1, 11),
+(8, '00:00:00', '2019-08-10 14:58:05', 0, 0, 1, 11),
+(9, '00:00:00', '2019-08-10 15:06:41', 3, 0, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -118,10 +123,10 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `user_id`) VALUES
-(1, 'Fill in the blank', 'What is an opensource Password Manager?', 'Keypass', 'No answer set.', 'No answer set.', 'No answer set.', 'No answer set.', 0),
-(2, 'True or false', 'are password managers available for mobile', 'True', 'False', 'True', 'No answer set.', 'No answer set.', 0),
-(3, 'Multiple choice', 'What is one feature password managers do not offer?', 'None of the above', 'Suggested passwords', 'Browser extensions', 'None of the above', 'Compromised password checks', 0),
-(10, ' Multiple Choice', 'What is the first thing to look for checking if a site is legitimate?', 'HTTPS in the address bar', 'URL ending with \".com\"', 'HTTPS in the address bar', 'Options for dark mode', 'If the site has any ads', 11);
+(1, 'Fill in the blank', 'What is an opensource Password Manager?', 'Keypass', 'No answer set.', 'No answer set.', 'No answer set.', 'No answer set.', 11),
+(2, 'True or false', 'are password managers available for mobile', 'True', 'False', 'True', 'No answer set.', 'No answer set.', 11),
+(3, 'Multiple choice', 'What is one feature password managers do not offer?', 'None of the above', 'Suggested passwords', 'Browser extensions', 'None of the above', 'Compromised password checks', 11),
+(27, ' Multiple Choice', 'What is the first thing to look for checking if a site is legitimate?', 'HTTPS in the address bar', 'URL ending with \".com\"', 'HTTPS in the address bar', 'Options for dark mode', 'If the site has any ads', 11);
 
 -- --------------------------------------------------------
 
@@ -146,7 +151,7 @@ CREATE TABLE `quizzes` (
 
 INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`, `user_id`) VALUES
 (1, 'Password Manager Quiz 1', 'Quiz on Password Manager Basics', '', 3, 0, 8, 11),
-(6, 'Basic Phishing Avoidance', 'Quiz on the easiest ways to avoid being victim to a phishing attack.', 'If you are having difficulty, view units 1 and 2.', 0, 0, 4, 11);
+(6, 'Basic Phishing Avoidance', 'Quiz on the easiest ways to avoid being victim to a phishing attack.', 'If you are having difficulty, view units 1 and 2.', 1, 0, 4, 11);
 
 -- --------------------------------------------------------
 
@@ -168,7 +173,8 @@ CREATE TABLE `quiz_questions` (
 INSERT INTO `quiz_questions` (`quiz_question_id`, `quiz_question_num`, `quiz_id`, `question_id`) VALUES
 (1, 1, 1, 1),
 (2, 2, 1, 2),
-(3, 3, 1, 3);
+(3, 3, 1, 3),
+(24, 1, 6, 27);
 
 -- --------------------------------------------------------
 
@@ -197,7 +203,18 @@ INSERT INTO `quiz_responses` (`response_id`, `response_content`, `response_score
 (6, '', 0, 3, 2),
 (7, '', 1, 1, 3),
 (8, '', 1, 2, 3),
-(9, '', 1, 3, 3);
+(9, '', 1, 3, 3),
+(10, '', 1, 1, 5),
+(11, '', 1, 1, 5),
+(12, '', 1, 1, 5),
+(13, '', 1, 2, 5),
+(14, '', 0, 3, 5),
+(15, '', 1, 1, 6),
+(16, '', 1, 1, 7),
+(17, '', 1, 1, 8),
+(18, '', 1, 1, 9),
+(19, '', 1, 2, 9),
+(20, '', 1, 3, 9);
 
 -- --------------------------------------------------------
 
@@ -212,7 +229,6 @@ CREATE TABLE `units` (
   `unit_desc` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
   `unit_type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content_id` int(11) NOT NULL,
-  `quiz_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -220,11 +236,11 @@ CREATE TABLE `units` (
 -- Dumping data for table `units`
 --
 
-INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `unit_type`, `content_id`, `quiz_id`, `course_id`) VALUES
-(3, 'Introduction to Password Managers', 1, 'An Introduction into how Password Managers work', '', 0, 0, 5),
-(4, 'Phishing Explained', 1, 'Introduction of phishing attacks', '', 0, 0, 3),
-(6, 'Common Password Manager Features', 2, 'An overview of the more common Password Manager features and how they protect your accounts', '', 0, 0, 5),
-(8, 'Password Manager Quiz', 3, 'First quiz on the basics of Password Managers', '', 0, 0, 5);
+INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `unit_type`, `content_id`, `course_id`) VALUES
+(3, 'Introduction to Password Managers', 1, 'An Introduction into how Password Managers work', '', 0, 5),
+(4, 'Phishing Explained', 1, 'Introduction of phishing attacks', '', 0, 3),
+(6, 'Common Password Manager Features', 2, 'An overview of the more common Password Manager features and how they protect your accounts', '', 0, 5),
+(8, 'Password Manager Quiz', 3, 'First quiz on the basics of Password Managers', '', 0, 5);
 
 -- --------------------------------------------------------
 
@@ -319,7 +335,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attempts`
 --
 ALTER TABLE `attempts`
-  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `content`
@@ -337,7 +353,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `quizzes`
@@ -349,13 +365,13 @@ ALTER TABLE `quizzes`
 -- AUTO_INCREMENT for table `quiz_questions`
 --
 ALTER TABLE `quiz_questions`
-  MODIFY `quiz_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `quiz_question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `quiz_responses`
 --
 ALTER TABLE `quiz_responses`
-  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `units`
