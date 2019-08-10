@@ -29,7 +29,7 @@ $feedback_icon = "fas fa-edit fa-2x";
 $feedback_message = "";
 //empty string so that response does not display until it is set
 $response = "";
-$button = "Submit";
+$button = "submit";
 
 
 if (isset($_POST["submit"])) {
@@ -37,7 +37,7 @@ if (isset($_POST["submit"])) {
     $response = $_POST["response"];
     $answer_content = $_SESSION["answer_content"];
     $correct = 0;
-    $button = "Submit";
+    $button = "continue";
     $quiz_question_id = $_SESSION["quiz_question_id"];
 
     //checking if submitted response is correct or not
@@ -71,6 +71,7 @@ if (isset($_POST["submit"])) {
 if (isset($_POST["continue"])) {
     $quiz_question_num += 1;
     $_SESSION["quiz_question_num"] = $quiz_question_num;
+    $button = "submit";
 }
 if ($quiz_question_num > $quiz_question_total) {
     // because questions are completed
@@ -118,8 +119,11 @@ include "header.php";
 <h4> <?php echo $question_content; ?></h4>
 <form action="quiz.php" method="post">
     <input type="text" name="response" value="<?php echo $response; ?>">
-    <input type="submit" name="submit" value="<?php echo $button; ?>">
-    <input type="submit" name="continue" value="Next Question">
+    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
+                                                                    echo "Submit";
+                                                                } elseif ($button == "continue") {
+                                                                    echo "Next Question";
+                                                                } ?>">
 </form>
 <div><?php echo $feedback_message; ?> </div>
 <span class="<?php echo $feedback_icon; ?>"></span>
@@ -153,11 +157,11 @@ include "header.php";
         if ($correct == 1) {
             ?>
 
-                                                                                                                                                                    <h2>Correct! <span class="fas fa-check-square text-success"></span></h2>
+                                                                                                                                                                                    <h2>Correct! <span class="fas fa-check-square text-success"></span></h2>
 <?php
 } else {
     ?>
-                                                                                                                                                                    <h2>Incorrect <span class="fas fa-times text-danger"></span></h2>
+                                                                                                                                                                                    <h2>Incorrect <span class="fas fa-times text-danger"></span></h2>
 <?php
 }
 ?> -->
