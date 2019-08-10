@@ -10,21 +10,20 @@ $page_title = "Create Exercises";
 // Code for page goes here
 
 if (isset($_POST["add_quiz"])) {
+
+    require "db_connect.php";
+
+
     $unit_id = mysqli_real_escape_string($conn, trim($_POST["unit_id"]));
     $quiz_name = mysqli_real_escape_string($conn, trim($_POST["quiz_name"]));
     $quiz_desc = mysqli_real_escape_string($conn, trim($_POST["quiz_desc"]));
     $quiz_tip = mysqli_real_escape_string($conn, trim($_POST["quiz_tip"]));
+    $user_id = $_SESSION["user_id"];
 
-    require "db_connect.php";
 
-    $sql = $sql = "INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`) 
-    VALUES (NULL, '$quiz_name', '$quiz_desc', '$quiz_tip', '0', '0', '$unit_id');";
 
-    if (mysqli_query($conn, $sql)) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
+    $sql = "INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`, `user_id`) 
+    VALUES (NULL, '$quiz_name', '$quiz_desc', '$quiz_tip', '0', '0', '$unit_id', '$user_id');";
 
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
