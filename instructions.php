@@ -28,7 +28,6 @@ if (mysqli_num_rows($result) > 0) {
         $quiz_id = $row["quiz_id"];
         $quiz_name = $row["quiz_name"];
         $quiz_desc = $row["quiz_desc"];
-        $quiz_type = $row["quiz_type"];
         $quiz_question_total = $row["quiz_question_total"];
     }
 } else {
