@@ -94,7 +94,6 @@ if ($content = "content") {
                 $quiz_id = $row["quiz_id"];
                 $quiz_name = $row["quiz_name"];
                 $quiz_desc = $row["quiz_desc"];
-                $quiz_type = $row["quiz_type"];
                 $quiz_link = "instructions.php?course_id=$course_id&unit_id=$unit_id&quiz_id=$quiz_id";
 
                 ?>
