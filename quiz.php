@@ -19,6 +19,7 @@ if (isset($_SESSION["attempt_id"])) {
     $attempt_id = $_SESSION["attempt_id"];
     $attempt_score = $_SESSION["attempt_score"];
     $quiz_id = $_SESSION["quiz_id"];
+    $quiz_tip = $_SESSION["quiz_tip"];
     $quiz_question_num = $_SESSION["quiz_question_num"];
     $quiz_question_total = $_SESSION["quiz_question_total"];
 }
@@ -98,6 +99,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
         $question_content = $row["question_content"];
+        $quiz_tip = $row["quiz_tip"];
         $_SESSION["answer_content"] = $row["answer_content"];
         $_SESSION["quiz_question_id"] = $row["quiz_question_id"];
     }
@@ -136,32 +138,38 @@ include "header.php";
 
 
 
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Hint</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <?php echo "$quiz_tip"; ?>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close Hint</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
-<!-- way of progressing through quiz with only one button  -->
-<!-- <h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-<h4> <?php echo $question_content; ?></h4>
-<form action="quiz.php" method="post">
-    <input type="text" name="response" value="<?php echo $response; ?>">
-    <input type="submit" name="submit" value="<?php echo $button; ?>">
-</form>
-<div><?php echo $feedback_message; ?> </div>
-<span class="<?php echo $feedback_icon; ?>"></span>
-<br>
-<br> -->
+<?php include "footer.php"; ?>
 
 
-<!-- Old way of displaying feedback -->
-<!-- <?php
-        if ($correct == 1) {
-            ?>
-
-                                                                                                                                                                                    <h2>Correct! <span class="fas fa-check-square text-success"></span></h2>
-<?php
-} else {
-    ?>
-                                                                                                                                                                                    <h2>Incorrect <span class="fas fa-times text-danger"></span></h2>
-<?php
-}
-?> -->
+<script type="text/javascript">
+    setTimeout(function() {
+        $("#myModal").modal();
+    }, 5000);
+</script>
