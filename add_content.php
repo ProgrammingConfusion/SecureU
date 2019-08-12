@@ -53,7 +53,7 @@ include "header.php";
 
             $user_id = $_SESSION["user_id"];
 
-            $sql = "SELECT * FROM units WHERE user_id=$user_id";
+            $sql = "SELECT * FROM units, courses WHERE units.course_id = courses.course_id AND units.user_id = $user_id ORDER BY ASC";
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
@@ -62,9 +62,10 @@ include "header.php";
 
                     $unit_id = $row["unit_id"];
                     $unit_name = $row["unit_name"];
+                    $course_name = $row["course_name"];
 
                     ?>
-            <option value="<?php echo $unit_id ?>"><?php echo "$unit_name" ?></option>
+            <option value="<?php echo $unit_id ?>"><?php echo " $course_name - $unit_name" ?></option>
 
             <?php
                 }
