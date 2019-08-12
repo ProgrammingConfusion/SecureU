@@ -74,6 +74,47 @@ include "header.php";
 <h3> <?php echo $quiz_name; ?></h3>
 <div> <?php echo $quiz_desc; ?></div>
 
+
+
+<?php
+
+//display previous result
+
+require "custom_functions.php";
+
+$user_id = $_SESSION["user_id"];
+
+$sql = "SELECT * FROM `attempts` WHERE quiz_id = $quiz_id AND user_id = $user_id ORDER BY attempt_date DESC LIMIT 1";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while ($row = mysqli_fetch_assoc($result)) {
+        $attempt_time_elapsed = $row["attempt_time_elapsed"];
+        $attempt_date = get_time_ago(strtotime($row["attempt_date"]));
+        $attempt_score = $row["attempt_score"];
+        $attempt_credits = $row["attempt_credits"];
+    }
+
+    ?>
+
+<div>You last attempted this quiz <?php echo $attempt_date; ?></div>
+<div>Time elapsed - <?php echo $attempt_time_elapsed; ?></div>
+<div>Score achieved - <?php echo $attempt_score; ?></div>
+<div>Credits earned - <?php echo $attempt_credits; ?></div>
+
+<?php
+} else {
+    ?>
+
+<div>You have not yet attempted this quiz. Good Luck!</div>
+
+<?php
+}
+
+
+?>
+
 <form action="<?php echo $instructions_link; ?>" method="post">
     <input class="btn btn-primary btn-lg" type="submit" value="Begin Quiz" name="instructions">
 </form>
