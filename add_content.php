@@ -35,35 +35,75 @@ if (isset($_POST["add_content"])) {
 include "header.php";
 ?>
 
-<?php include "navbar.php"; ?>
+<?php // include "navbar.php"; 
+?>
 
 <form action="add_content.php" method="post">
 
-    <p>Unit ID</p>
-    <input type="number" name="unit_id" required> <br>
 
-    <p>Content Name</p>
-    <input type="text" name="content_name"> <br>
+    <h2> Add Content</h2>
 
-    <p>Content Order</p>
-    <input type="number" name="content_num"> <br>
+    <form action="add_content.php" method="post">
 
-    <p>Content Type</p>
-    <select name="content_type">
+        Select Unit <br>
+        <select name="unit_id" placeholder="Select Unit">
+            <?php
 
-        <option value="video">Video</option>
-        <option value="image">Image</option>
-        <option value="document">Document</option>
+            require "db_connect.php";
 
-    </select>
+            $user_id = $_SESSION["user_id"];
 
-    <p>Content Source Code</p>
-    <textarea name="content_code" cols="30" rows="10"></textarea> <br>
+            $sql = "SELECT * FROM units WHERE user_id=$user_id";
+            $result = mysqli_query($conn, $sql);
 
-    <input type="submit" name="add_content" value="Add_content">
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                    $unit_id = $row["unit_id"];
+                    $unit_name = $row["unit_name"];
+
+                    ?>
+            <option value="<?php echo $unit_id ?>"><?php echo "$unit_name" ?></option>
+
+            <?php
+                }
+            }
+
+            ?>
 
 
-</form>
-<?php
-include "footer.php";
-?>
+
+
+        </select> <br>
+        <br>
+
+
+        <p>Content Name</p>
+        <input type="text" name="content_name"> <br><br>
+
+        <p>Content Order</p>
+        <input type="number" name="content_num"> <br><br>
+
+        <p>Content Type</p>
+        <select name="content_type"><br>
+
+            <option value="video">Video</option>
+            <option value="image">Image</option>
+            <option value="document">Document</option>
+
+        </select> <br>
+        <br>
+
+
+
+        <p>Content Source Code</p>
+        <textarea name="content_code" cols="30" rows="10"></textarea> <br>
+
+        <input type="submit" name="add_content" value="Add_content">
+
+
+    </form>
+    <?php
+    include "footer.php";
+    ?>
