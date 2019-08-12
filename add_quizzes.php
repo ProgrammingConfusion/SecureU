@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_id"])) {
     header("location: login.php");
 }
 
-$page_title = "Create Exercises";
+$page_title = "Create Quizzes";
 
 // Code for page goes here
 
@@ -39,7 +39,7 @@ include "header.php";
 <?php include "navbar.php"; ?>
 
 <!-- content for the page starts here -->
-<form action="add_exercises.php" method="post">
+<form action="add_quizzes.php" method="post">
     Select a Unit<br>
     <select name="unit_id" placeholder="Select a Unit ">
         <?php
@@ -60,9 +60,9 @@ include "header.php";
                 $course_name = $row["course_name"];
 
                 ?>
-                <option value="<?php echo $unit_id ?>"><?php echo "$course_name - $unit_name" ?></option>
+        <option value="<?php echo $unit_id ?>"><?php echo "$course_name - $unit_name" ?></option>
 
-            <?php
+        <?php
             }
         }
 

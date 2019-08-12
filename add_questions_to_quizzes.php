@@ -73,7 +73,7 @@ include "header.php";
 
 <!-- content for the page starts here -->
 
-<form action="add_questions_to_exercises.php" method="post">
+<form action="add_questions_to_quizzes.php" method="post">
 
 
 
@@ -100,9 +100,9 @@ include "header.php";
                 $course_name = $row["course_name"];
 
                 ?>
-                <option value="<?php echo "$quiz_id" ?>"><?php echo "$course_name - $quiz_name" ?></option>
+        <option value="<?php echo "$quiz_id" ?>"><?php echo "$course_name - $quiz_name" ?></option>
 
-            <?php
+        <?php
             }
         }
 
