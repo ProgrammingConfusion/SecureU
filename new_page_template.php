@@ -16,3 +16,7 @@ include "header.php";
 <?php include "navbar.php"; ?>
 
 <!-- content for the page starts here -->
+
+<?php include "footer.php"; ?>
+
+<!-- page specific scripts go here -->
