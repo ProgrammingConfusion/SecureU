@@ -32,7 +32,7 @@ if (isset($_POST["add_questions"])) {
 
 
     $sql = "INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `user_id`) 
-    VALUES (NULL, ' $question_type', '$question_content', '$answer_content', '$answer_a', '$answer_b', '$answer_c', '$answer_d', '$user_id');";
+    VALUES (NULL, '$question_type', '$question_content', '$answer_content', '$answer_a', '$answer_b', '$answer_c', '$answer_d', '$user_id');";
 
 
 
