@@ -23,8 +23,8 @@ if (isset($_POST["create_unit"])) {
     $unit_num = mysqli_real_escape_string($conn, trim($_POST["unit_num"]));
     $unit_desc = mysqli_real_escape_string($conn, trim($_POST["unit_desc"]));
 
-    $sql = "INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `unit_type`, `content_id`, `course_id`, `user_id`)
-     VALUES (NULL, '$unit_name', '$unit_num', '$unit_desc', '', '', '$course_id', '$user_id');";
+    $sql = "INSERT INTO `units` (`unit_id`, `unit_name`, `unit_num`, `unit_desc`, `course_id`, `user_id`)
+     VALUES (NULL, '$unit_name', '$unit_num', '$unit_desc', '$course_id', '$user_id');";
 
     if (mysqli_query($conn, $sql)) {
         echo "New Unit created successfully";
