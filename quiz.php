@@ -57,18 +57,16 @@ if (isset($_POST["submit"])) {
     //counting score between questions
     $_SESSION["attempt_score"] += $correct;
 
-    $sql = "INSERT INTO `quiz_responses` (`response_id`, `response_content`, `response_score`, `quiz_question_id`, `attempt_id`)
-     VALUES (NULL, '', '$correct', '$quiz_question_id', '$attempt_id');";
+    $sql = "INSERT INTO `quiz_responses` (`response_id`, `response_score`, `quiz_question_id`, `attempt_id`)
+     VALUES (NULL, '$correct', '$quiz_question_id', '$attempt_id');";
 
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
-
-    //moves to the next question 
-
 }
+//moves to the next question 
 
 if (isset($_POST["continue"])) {
     $quiz_question_num += 1;
@@ -84,7 +82,7 @@ if ($quiz_question_num > $quiz_question_total) {
     header("location:results.php");
 }
 
-
+//pull question from database
 $sql = "SELECT *
 FROM quiz_questions, quizzes, questions
 WHERE quiz_questions.quiz_id = quizzes.quiz_id
@@ -98,8 +96,12 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
 
 
-
+        $answer_a = $row["answer_a"];
+        $answer_b = $row["answer_b"];
+        $answer_c = $row["answer_c"];
+        $answer_d = $row["answer_d"];
         $question_content = $row["question_content"];
+        $question_type = $row["question_type"];
         $_SESSION["answer_content"] = $row["answer_content"];
         $_SESSION["quiz_question_id"] = $row["quiz_question_id"];
     }
@@ -113,28 +115,98 @@ include "header.php";
 <!-- page specific styling goes here -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
-<?php include "navbar.php"; ?>
+<!-- <?php include "navbar.php"; ?> -->
 
 <!-- content for the page starts here -->
+
+<!-- display format for fill in the blank -->
+<?php
+if (strcasecmp($question_type, "Fill in the Blank") == 0) {
+
+    ?>
+
 
 <h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
 <h4> <?php echo $question_content; ?></h4>
 <form action="quiz.php" method="post">
     <input type="text" name="response" value="<?php echo $response; ?>">
     <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
-                                                                    echo "Submit";
-                                                                } elseif ($button == "continue") {
-                                                                    echo "Next Question";
-                                                                } ?>">
+                                                                        echo "Submit";
+                                                                    } elseif ($button == "continue") {
+                                                                        echo "Next Question";
+                                                                    } ?>">
+</form>
+<div><?php echo $feedback_message; ?> </div>
+<span class="<?php echo $feedback_icon; ?>"></span>
+<br>
+<br>
+<?php
+}
+
+
+//display format for multiple choice 
+
+elseif (strcasecmp($question_type, "Multiple Choice") == 0) {
+
+    $answers = array($answer_a, $answer_b, $answer_c, $answer_d);
+    shuffle($answers);
+
+    ?>
+<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
+<h4> <?php echo $question_content; ?></h4>
+<form action="quiz.php" method="post">
+    <input type="radio" name="response" id="answer_a" value="<?php echo $answers[0]; ?>">
+    <label for="answer_a"><?php echo $answers[0]; ?></label><br>
+
+    <input type="radio" name="response" id="answer_b" value="<?php echo $answers[1]; ?>">
+    <label for="answer_b"><?php echo $answers[1]; ?></label><br>
+
+    <input type="radio" name="response" id="answer_c" value="<?php echo $answers[2]; ?>">
+    <label for="answer_c"><?php echo $answers[2]; ?></label><br>
+
+    <input type="radio" name="response" id="answer_d" value="<?php echo $answers[3]; ?>">
+    <label for="answer_d"><?php echo $answers[3]; ?></label><br>
+
+    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
+                                                                        echo "Submit";
+                                                                    } elseif ($button == "continue") {
+                                                                        echo "Next Question";
+                                                                    } ?>">
 </form>
 <div><?php echo $feedback_message; ?> </div>
 <span class="<?php echo $feedback_icon; ?>"></span>
 <br>
 <br>
 
+<?php
+} elseif (strcasecmp($question_type, "True or False") == 0) {
 
+    ?>
+<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
+<h4> <?php echo $question_content; ?></h4>
+<form action="quiz.php" method="post">
+    <input type="radio" name="response" id="answer_a" value="<?php echo $answer_a; ?>">
+    <label for="answer_a"><?php echo $answer_a; ?></label><br>
 
+    <input type="radio" name="response" id="answer_b" value="<?php echo $answer_b; ?>">
+    <label for="answer_b"><?php echo $answer_b; ?></label><br>
 
+    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
+                                                                        echo "Submit";
+                                                                    } elseif ($button == "continue") {
+                                                                        echo "Next Question";
+                                                                    } ?>">
+</form>
+<div><?php echo $feedback_message; ?> </div>
+<span class="<?php echo $feedback_icon; ?>"></span>
+<br>
+<br>
+
+<?php
+} else {
+    echo "no question type recognised";
+}
+?>
 
 
 
