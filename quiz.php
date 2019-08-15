@@ -20,6 +20,7 @@ if (isset($_SESSION["attempt_id"])) {
     $attempt_score = $_SESSION["attempt_score"];
     $quiz_id = $_SESSION["quiz_id"];
     $quiz_tip = $_SESSION["quiz_tip"];
+    $quiz_tip_timer = $_SESSION["quiz_tip_timer"];
     $quiz_question_num = $_SESSION["quiz_question_num"];
     $quiz_question_total = $_SESSION["quiz_question_total"];
 }
@@ -99,7 +100,6 @@ if (mysqli_num_rows($result) > 0) {
 
 
         $question_content = $row["question_content"];
-        $quiz_tip = $row["quiz_tip"];
         $_SESSION["answer_content"] = $row["answer_content"];
         $_SESSION["quiz_question_id"] = $row["quiz_question_id"];
     }
@@ -171,5 +171,5 @@ include "header.php";
 <script type="text/javascript">
     setTimeout(function() {
         $("#myModal").modal();
-    }, 5000);
+    }, <?php echo $quiz_tip_timer; ?>000);
 </script>

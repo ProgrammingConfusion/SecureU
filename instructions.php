@@ -29,6 +29,7 @@ if (mysqli_num_rows($result) > 0) {
         $quiz_name = $row["quiz_name"];
         $quiz_desc = $row["quiz_desc"];
         $quiz_tip = $row["quiz_tip"];
+        $quiz_tip_timer = $row["quiz_tip_timer"];
         $quiz_question_total = $row["quiz_question_total"];
     }
 } else {
@@ -50,6 +51,7 @@ if (isset($_POST["instructions"])) {
         $_SESSION["unit_id"] = $unit_id;
         $_SESSION["quiz_id"] = $quiz_id;
         $_SESSION["quiz_tip"] = $quiz_tip;
+        $_SESSION["quiz_tip_timer"] = $quiz_tip_timer;
         $_SESSION["attempt_id"] = $attempt_id;
         $_SESSION["attempt_score"] = 0;
         $_SESSION["quiz_question_total"] = $quiz_question_total;

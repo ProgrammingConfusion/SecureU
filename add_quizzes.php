@@ -18,12 +18,13 @@ if (isset($_POST["add_quiz"])) {
     $quiz_name = mysqli_real_escape_string($conn, trim($_POST["quiz_name"]));
     $quiz_desc = mysqli_real_escape_string($conn, trim($_POST["quiz_desc"]));
     $quiz_tip = mysqli_real_escape_string($conn, trim($_POST["quiz_tip"]));
+    $quiz_tip_timer = mysqli_real_escape_string($conn, trim($_POST["quiz_tip_timer"]));
     $user_id = $_SESSION["user_id"];
 
 
 
-    $sql = "INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_tip`, `quiz_question_total`, `quiz_credits`, `unit_id`, `user_id`) 
-    VALUES (NULL, '$quiz_name', '$quiz_desc', '$quiz_tip', '0', '0', '$unit_id', '$user_id');";
+    $sql = "INSERT INTO `quizzes` (`quiz_id`, `quiz_name`, `quiz_desc`, `quiz_tip`, `quiz_tip_timer`, `quiz_question_total`, `quiz_credits`, `unit_id`, `user_id`) 
+    VALUES (NULL, '$quiz_name', '$quiz_desc', '$quiz_tip', '$quiz_tip_timer', '0', '0', '$unit_id', '$user_id');";
 
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
@@ -85,6 +86,10 @@ include "header.php";
 
     Quiz Tip <br>
     <input type="text" name="quiz_tip" placeholder="Enter Quiz Tip"> <br>
+    <br>
+
+    Quiz Tip Timer <br>
+    <input type="number" min="15" max="60" name="quiz_tip_timer" placeholder="Enter Quiz Tip Timer"> <br>
     <br>
 
 
