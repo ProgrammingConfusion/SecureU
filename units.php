@@ -46,7 +46,6 @@ include "header.php";
             $unit_num = $row["unit_num"];
             $unit_name = $row["unit_name"];
             $unit_desc = $row["unit_desc"];
-            $unit_type = $row["unit_type"];
             $unit_link = "content.php?course_id=$course_id&unit_id=$unit_id";
             ?>
 
