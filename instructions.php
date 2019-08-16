@@ -90,7 +90,7 @@ require "custom_functions.php";
 
 $user_id = $_SESSION["user_id"];
 
-$sql = "SELECT * FROM `attempts` WHERE quiz_id = $quiz_id AND user_id = $user_id ORDER BY attempt_date DESC LIMIT 1";
+$sql = "SELECT * FROM attempts, quizzes WHERE attempts.quiz_id = quizzes.quiz_id AND attempts.quiz_id = $quiz_id AND attempts.user_id = $user_id ORDER BY attempt_date DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -100,13 +100,14 @@ if (mysqli_num_rows($result) > 0) {
         $attempt_date = get_time_ago(strtotime($row["attempt_date"]));
         $attempt_score = $row["attempt_score"];
         $attempt_credits = $row["attempt_credits"];
+        $quiz_question_total = $row["quiz_question_total"];
     }
 
     ?>
 
 <div>You last attempted this quiz <?php echo $attempt_date; ?></div>
 <div>Time elapsed - <?php echo $attempt_time_elapsed; ?></div>
-<div>Score achieved - <?php echo $attempt_score; ?></div>
+<div>Score achieved - <?php echo $attempt_score; ?> out of <?php echo $quiz_question_total; ?> </div>
 <div>Credits earned - <?php echo $attempt_credits; ?></div>
 
 <?php
@@ -124,3 +125,5 @@ if (mysqli_num_rows($result) > 0) {
 <form action="<?php echo $instructions_link; ?>" method="post">
     <input class="btn btn-primary btn-lg" type="submit" value="Begin Quiz" name="instructions">
 </form>
+
+SELECT * FROM attempts, quizzes WHERE attempts.quiz_id = quizzes.quiz_id AND attempts.quiz_id = 1 AND attempts.user_id = 11

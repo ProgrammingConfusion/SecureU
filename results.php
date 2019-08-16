@@ -13,6 +13,7 @@ if (isset($_SESSION["attempt_score"])) {
     $attempt_score = $_SESSION["attempt_score"];
     $attempt_id = $_SESSION["attempt_id"];
     $attempt_credits = $_SESSION["attempt_credits"];
+    $quiz_question_total = $_SESSION["quiz_question_total"];
 
 
     require "db_connect.php";
@@ -26,6 +27,7 @@ if (isset($_SESSION["attempt_score"])) {
     unset($_SESSION["attempt_credits"]);
     unset($_SESSION["attempt_id"]);
     unset($_SESSION["quiz_question_num"]);
+    unset($_SESSION["quiz_question_total"]);
     unset($_SESSION["course_id"]);
     unset($_SESSION["unit_id"]);
     unset($_SESSION["quiz_id"]);
@@ -56,5 +58,5 @@ include "header.php";
 
 <!-- content for the page starts here -->
 
-<h1>Your final score is <?php echo $attempt_score; ?> </h1>
+<h1>Your final score is <?php echo $attempt_score; ?> out of <?php echo $quiz_question_total; ?> </h1>
 <h1>Credits earned: <?php echo $attempt_credits; ?></h1>
