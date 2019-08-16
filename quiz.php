@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_id"])) {
     header("location: login.php");
 }
 
-$page_title = "Quiz";
+
 
 // Code for page goes here
 
@@ -19,12 +19,14 @@ if (isset($_SESSION["attempt_id"])) {
     $attempt_id = $_SESSION["attempt_id"];
     $attempt_score = $_SESSION["attempt_score"];
     $quiz_id = $_SESSION["quiz_id"];
+    $quiz_name = $_SESSION["quiz_name"];
     $quiz_tip = $_SESSION["quiz_tip"];
     $quiz_tip_timer = $_SESSION["quiz_tip_timer"];
     $quiz_question_num = $_SESSION["quiz_question_num"];
     $quiz_question_total = $_SESSION["quiz_question_total"];
 }
 
+$page_title = "$quiz_name";
 
 //default values for page before interaction
 $feedback_icon = "fas fa-edit fa-2x";

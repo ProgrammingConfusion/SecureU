@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_id"])) {
     header("location: login.php");
 }
 
-$page_title = "Quiz Instructions";
+
 
 // Code for page goes here
 
@@ -50,6 +50,7 @@ if (isset($_POST["instructions"])) {
         $_SESSION["course_id"] = $course_id;
         $_SESSION["unit_id"] = $unit_id;
         $_SESSION["quiz_id"] = $quiz_id;
+        $_SESSION["quiz_name"] = $quiz_name;
         $_SESSION["quiz_tip"] = $quiz_tip;
         $_SESSION["quiz_tip_timer"] = $quiz_tip_timer;
         $_SESSION["attempt_id"] = $attempt_id;
@@ -64,6 +65,7 @@ if (isset($_POST["instructions"])) {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
 }
+$page_title = "$quiz_name Instructions";
 
 include "header.php";
 ?>
