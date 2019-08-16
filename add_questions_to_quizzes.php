@@ -43,8 +43,8 @@ if (isset($_POST["add_questions"])) {
 
         $question_id = mysqli_insert_id($conn);
 
-        $sql = "INSERT INTO `quiz_questions` (`quiz_question_id`, `quiz_question_num`, `quiz_id`, `question_id`) 
-        VALUES (NULL, '1', '$quiz_id', '$question_id');";
+        $sql = "INSERT INTO `quiz_questions` (`quiz_question_id`, `quiz_id`, `question_id`) 
+        VALUES (NULL, '$quiz_id', '$question_id');";
 
         if (mysqli_query($conn, $sql)) {
             echo "New record created successfully";

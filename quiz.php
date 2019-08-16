@@ -90,7 +90,9 @@ FROM quiz_questions, quizzes, questions
 WHERE quiz_questions.quiz_id = quizzes.quiz_id
 AND quiz_questions.question_id = questions.question_id
 AND quiz_questions.quiz_id = $quiz_id
-AND quiz_questions.quiz_question_num = $quiz_question_num";
+LIMIT $quiz_question_num";
+
+
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
