@@ -53,7 +53,7 @@ include "header.php";
 
             $user_id = $_SESSION["user_id"];
 
-            $sql = "SELECT * FROM units, courses WHERE units.course_id = courses.course_id AND units.user_id = $user_id ORDER BY ASC";
+            $sql = "SELECT * FROM units, courses WHERE units.course_id = courses.course_id AND units.user_id = $user_id ORDER BY unit_name ASC";
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
@@ -65,7 +65,7 @@ include "header.php";
                     $course_name = $row["course_name"];
 
                     ?>
-            <option value="<?php echo $unit_id ?>"><?php echo " $course_name - $unit_name" ?></option>
+            <option value="<?php echo $unit_id ?>"><?php echo "$unit_name - $course_name" ?></option>
 
             <?php
                 }
@@ -84,14 +84,14 @@ include "header.php";
         <input type="text" name="content_name"> <br><br>
 
         <p>Content Order</p>
-        <input type="number" name="content_num"> <br><br>
+        <input type="number" min="1" name="content_num"> <br><br>
 
         <p>Content Type</p>
         <select name="content_type"><br>
 
-            <option value="video">Video</option>
-            <option value="image">Image</option>
-            <option value="document">Document</option>
+            <option value="Video">Video</option>
+            <option value="Slide">Slide</option>
+            <option value="PDF">PDF</option>
 
         </select> <br>
         <br>

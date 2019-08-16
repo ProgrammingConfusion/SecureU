@@ -57,7 +57,7 @@ include "header.php";
 echo $content;
 
 if ($content = "content") {
-    $sql = "SELECT * FROM `content` WHERE unit_id = $unit_id";
+    $sql = "SELECT * FROM `content` WHERE unit_id = $unit_id ORDER BY content_num ASC";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -68,14 +68,46 @@ if ($content = "content") {
             $content_num = $row["content_num"];
             $content_type = $row["content_type"];
             $content_code = $row["content_code"];
+            $content_file = $row["content_file"];
+
+            if (strcasecmp($content_type, "Video") == 0) {
+
+                ?>
+<h1><?php echo $content_name; ?></h1>
+
+<p><?php echo $content_code; ?> </p>
+<?php
+            }
             ?>
-            <h1><?php echo $content_name; ?></h1>
+<?php
+            if (strcasecmp($content_type, "Slide") == 0) {
 
-            <p><?php echo $content_code; ?> </p>
+                ?>
+<h1><?php echo $content_name; ?></h1>
+
+<p><?php echo $content_code; ?> </p>
+<?php
+            }
+            ?>
+
+<?php
+            if (strcasecmp($content_type, "PDF") == 0) {
+
+                ?>
+<h1><?php echo $content_name; ?></h1>
+
+<div><embed src="<?php echo $content_file; ?>" type="application/pdf" width="75%" height="600px" /></div>
+<?php
+            }
+            ?>
 
 
 
-        <?php
+
+
+
+
+<?php
         }
     }
 } else {
@@ -97,18 +129,18 @@ if ($content = "content") {
                 $quiz_link = "instructions.php?course_id=$course_id&unit_id=$unit_id&quiz_id=$quiz_id";
 
                 ?>
-                <div class="card">
-                    <div class="card-body ">
-                        <h3 class="card-title"><?php echo $quiz_name; ?></h3>
-                        <p class="card-text"> <?php echo $quiz_desc; ?></p>
-                        <a class="btn btn-primary" href="<?php echo $quiz_link; ?>">Select</a>
+    <div class="card">
+        <div class="card-body ">
+            <h3 class="card-title"><?php echo $quiz_name; ?></h3>
+            <p class="card-text"> <?php echo $quiz_desc; ?></p>
+            <a class="btn btn-primary" href="<?php echo $quiz_link; ?>">Select</a>
 
-                    </div>
-                </div>
+        </div>
+    </div>
 
 
 
-            <?php
+    <?php
             }
         }
     } else {
