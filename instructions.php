@@ -57,6 +57,8 @@ if (isset($_POST["instructions"])) {
         $_SESSION["attempt_score"] = 0;
         $_SESSION["quiz_question_total"] = $quiz_question_total;
         $_SESSION["quiz_question_num"] = 1;
+        $_SESSION["question_credits"] = 0;
+        $_SESSION["attempt_credits"] = 0;
 
 
 
