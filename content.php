@@ -8,6 +8,7 @@ if (!isset($_SESSION["user_id"])) {
 if (isset($_GET["course_id"]) && isset($_GET["unit_id"])) {
     $course_id = $_GET["course_id"];
     $unit_id = $_GET["unit_id"];
+    $forum_link = "forum.php?course_id=$course_id&unit_id=$unit_id";
 }
 require "db_connect.php";
 
@@ -53,8 +54,10 @@ include "header.php";
 <!-- content for the page starts here -->
 
 
+<a class="btn btn-primary" href="<?php echo $forum_link; ?>">Forum</a>
+
 <?php
-echo $content;
+
 
 if ($content = "content") {
     $sql = "SELECT * FROM `content` WHERE unit_id = $unit_id ORDER BY content_num ASC";
