@@ -49,6 +49,20 @@ if (isset($_POST["submit"])) {
         $correct = 1;
         $feedback_icon = "fas fa-check-square text-success fa-2x";
         $feedback_message = "Correct!";
+        $user_id = $_SESSION["user_id"];
+        $sql = "SELECT * FROM quiz_responses, attempts 
+        WHERE quiz_question_id = $quiz_question_id 
+        AND response_score = 1 
+        AND attempts.attempt_id = quiz_responses.attempt_id 
+        AND attempts.user_id = $user_id";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $_SESSION["question_credits"] = 0;
+        }
+
+        //check response table to see if question was done before
+        $_SESSION["attempt_credits"] += $_SESSION["question_credits"];
     } else {
         $correct = 0;
         $feedback_icon = "fas fa-times text-danger fa-2x";
@@ -58,6 +72,7 @@ if (isset($_POST["submit"])) {
 
     //counting score between questions
     $_SESSION["attempt_score"] += $correct;
+
 
     $sql = "INSERT INTO `quiz_responses` (`response_id`, `response_score`, `quiz_question_id`, `attempt_id`)
      VALUES (NULL, '$correct', '$quiz_question_id', '$attempt_id');";
@@ -108,6 +123,7 @@ if (mysqli_num_rows($result) > 0) {
         $question_type = $row["question_type"];
         $_SESSION["answer_content"] = $row["answer_content"];
         $_SESSION["quiz_question_id"] = $row["quiz_question_id"];
+        $_SESSION["question_credits"] = $row["question_credits"];
     }
 } else {
     echo "0 results";
