@@ -125,5 +125,3 @@ if (mysqli_num_rows($result) > 0) {
 <form action="<?php echo $instructions_link; ?>" method="post">
     <input class="btn btn-primary btn-lg" type="submit" value="Begin Quiz" name="instructions">
 </form>
-
-SELECT * FROM attempts, quizzes WHERE attempts.quiz_id = quizzes.quiz_id AND attempts.quiz_id = 1 AND attempts.user_id = 11
