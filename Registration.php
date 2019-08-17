@@ -36,6 +36,8 @@ if (isset($_POST["registration"])) {
 include "header.php";
 ?>
 
+<?php include "navbar.php"; ?>
+
 <h1>Registration</h1>
 
 <form action="registration.php" method="post">
