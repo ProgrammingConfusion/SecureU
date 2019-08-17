@@ -7,10 +7,10 @@ session_start();
 if (isset($_POST["login"])) {
     require "db_connect.php";
 
-    $username = mysqli_real_escape_string($conn, trim($_POST["username"]));
+    $email = mysqli_real_escape_string($conn, trim($_POST["email"]));
     $password = mysqli_real_escape_string($conn, trim($_POST["password"]));
 
-    $sql = "SELECT * FROM users WHERE username ='$username'";
+    $sql = "SELECT * FROM users WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -34,7 +34,7 @@ if (isset($_POST["login"])) {
             }
         }
     } else {
-        echo "No account with that username exists.";
+        echo "No account with that email address exists.";
     }
 }
 
@@ -42,19 +42,25 @@ include "header.php";
 
 ?>
 
-<form action="Login.php" method="post">
+<?php include "navbar.php"; ?>
 
-    Username <br>
-    <input type="text" name="username" placeholder="Enter your Username"> <br>
-    <br>
-    Password <br>
-    <input type="password" name="password" placeholder="Enter your Password"> <br>
-
-    <input type="submit" name="login" value="Log in">
+<!-- content for the page starts here -->
 
 
-</form>
+<div class="container" style="margin-top: 100px">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-offset-3" align="center">
 
+            <form action="Login.php" method="post">
+                <input placeholder="Email..." name="email" class="form-control"><br>
+                <input type="password" placeholder="Password..." name="password" class="form-control"><br>
+                <input type="submit" name="login" value="Log In" class="btn btn-primary">
+                <input type="button" value="Log In With Google" class="btn btn-danger">
+            </form>
+
+        </div>
+    </div>
+</div>
 
 
 
