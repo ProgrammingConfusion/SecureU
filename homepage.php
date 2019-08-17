@@ -25,9 +25,9 @@ if (isset($_SESSION["user_id"])); {
     <h2>Welcome back, <?php echo "$first_name $last_name"; ?> </h2>
 
 <?php
-
 }
 
+echo $_SESSION["username"];
 ?>
 <a href="add_courses.php">Create Course</a>
 <br>
