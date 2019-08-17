@@ -5,53 +5,22 @@ if (!isset($_SESSION["user_id"])) {
     header("location: login.php");
 }
 
-$page_title = "Q&A Forum";
+$page_title = "#";
 
 // Code for page goes here
-if (isset($_GET["course_id"]) && isset($_GET["unit_id"])) {
-    $course_id = $_GET["course_id"];
-    $unit_id = $_GET["unit_id"];
-    $_SESSION["unit_id"] = $unit_id;
-    echo $_SESSION["unit_id"];
-}
 
-
-
-if (isset($_POST["create_post"])) {
-
-    require "db_connect.php";
-    $post_name = mysqli_real_escape_string($conn, trim($_POST["post_name"]));
-    $post_content = mysqli_real_escape_string($conn, trim($_POST["post_content"]));
-    $unit_id = $_SESSION["unit_id"];
-    $user_id = $_SESSION["user_id"];
-
-
-
-    $sql = "INSERT INTO `forum` (`post_id`, `post_name`, `post_content`, `post_date`, `post_credits`, `unit_id`, `user_id`) 
-VALUES (NULL, '$post_name', '$post_content', CURRENT_TIMESTAMP, '', '$unit_id', '$user_id');";
-
-    if (mysqli_query($conn, $sql)) { } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
+if (isset($_POST["search_post"])) {
+    $search_post_field = $_POST["search_post_field"];
 }
 
 include "header.php";
 ?>
 <!-- page specific styling goes here -->
-
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <style>
-    .require {
-        color: #666;
-    }
-
-    label small {
-        color: #999;
-        font-weight: normal;
-    }
-
     body {
-        background: #f2f3f8;
+        background: #808080;
         margin-top: 20px;
     }
 
@@ -338,14 +307,39 @@ include "header.php";
 <?php include "navbar.php"; ?>
 
 <!-- content for the page starts here -->
-
 <div class="container">
     <div class="row">
+        <div class="row text-center">
+            <div class="col-md-8 offset-md-2">
+                <h3>Search All Posts</h3>
+                <p class="body-text-3x"></p>
+                <div class="small-search-wrap">
+                    <div class="search-form">
+                        <form action="#">
+                            <div class="form-group">
+                                <input type="text" value="" placeholder="Search something here" maxlength="100" class="form-control" name="search_post_field" id="search_post_field">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="search_post" value="Search" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <hr class="invisible small">
+            </div>
+            <div class="col-md-12">
+                <div class="v-heading-v2">
+                    <h4 class="v-search-result-count">Seach Results</h4>
+                </div>
+            </div>
+        </div>
+
+
         <?php
         require "db_connect.php";
         require "custom_functions.php";
         //$sql = "SELECT * FROM `forum`";
-        $sql = "SELECT * FROM forum, users, units WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND forum.unit_id = $unit_id";
+        $sql = "SELECT * FROM forum, users, units, courses WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -360,6 +354,7 @@ include "header.php";
                 $username = $row["username"];
                 $user_img = $row["user_img"];
                 $unit_name = $row["unit_name"];
+                $course_name = $row["course_name"];
 
                 ?>
 
@@ -381,7 +376,7 @@ include "header.php";
                                     <li class="time"><?php echo $post_date; ?>‎</li>
                                     <li> Posted by: <?php echo $username; ?></li>
                                     <li class="pr-0">in</li>
-                                    <li class="pl-0"><?php echo $unit_name; ?></li>
+                                    <li class="pl-0"><?php echo "$course_name - $unit_name"; ?></li>
                                 </ul>
                             </div>
                             <div>
@@ -397,52 +392,13 @@ include "header.php";
         <?php
             }
         } else {
-            ?>
-        <div class="col-md-12">
-            <div class="v-heading-v2">
-                <h4 class="v-search-result-count">No posts yet, make one below!</h4>
-            </div>
-        </div>
-        <?php
+            echo "0 results";
         }
         ?>
 
-        <div class="col-md-8 col-md-offset-2">
-
-            <h3>Create post</h3>
-
-            <form action="forum.php" method="POST">
-
-
-                <div class="form-group">
-                    <label for="post_name">Post Title<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="Enter post title." name="post_name" />
-                </div>
-
-                <div class="form-group">
-                    <label for="post_content">Post<span class="text-danger">*</span></label>
-                    <textarea rows="5" class="form-control" placeholder="Post your question or response here." name="post_content"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <p><span class="text-danger">*</span> - required fields</p>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" name="create_post" value="Post" class="btn btn-primary">
-                </div>
-
-            </form>
-        </div>
-
     </div>
-    <a class="btn btn-primary" href="forum_search.php">Search all posts</a>
 </div>
 
-
-<!-- <?php
-        echo $unit_id;
-        ?> -->
 <?php include "footer.php"; ?>
 
 <!-- page specific scripts go here -->
