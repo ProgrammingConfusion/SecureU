@@ -3,6 +3,8 @@
 
 
 <?php
+
+session_start();
 require_once 'google_client/vendor/autoload.php';
 
 // init configuration
@@ -29,15 +31,62 @@ if (isset($_GET['code'])) {
     $email =  $google_account_info->email;
     $name =  $google_account_info->name;
 
-    echo "$email";
-    echo "$name";
+
+    //var_dump(get_object_vars($google_oauth));
+
+    $username = strstr("$email", "@", true);
 
     //run select query to check if email already in db
+    require "db_connect.php";
 
-    //if it exists assign all db data to session variables and redirect to homepage
 
-    //if it does not exist, insert it into the database, and then run the same select query as above,
-    //assign values to session variables then redirect to homepage
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while ($row = mysqli_fetch_assoc($result)) {
+            //if it exists assign all db data to session variables and redirect to homepage
+            $_SESSION["user_id"] = $row["user_id"];
+            $_SESSION["first_name"] = $row["first_name"];
+            $_SESSION["last_name"] = $row["last_name"];
+            $_SESSION["username"] = $row["username"];
+            $_SESSION["email"] = $row["email"];
+            $_SESSION["user_role"] = $row["user_role"];
+            header("location: homepage.php");
+        }
+    } else {
+
+        //if it does not exist, insert it into the database, and then run the same select query as above,
+        $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
+        VALUES (NULL, '$email', '$username', '', '$name', '', '', 'student', CURRENT_TIMESTAMP);";
+
+        if (mysqli_query($conn, $sql)) {
+            $sql = "SELECT * FROM users WHERE email = '$email'";
+            $result = mysqli_query($conn, $sql);
+
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while ($row = mysqli_fetch_assoc($result)) {
+                    //assign values to session variables then redirect to homepage
+                    $_SESSION["user_id"] = $row["user_id"];
+                    $_SESSION["first_name"] = $row["first_name"];
+                    $_SESSION["last_name"] = $row["last_name"];
+                    $_SESSION["username"] = $row["username"];
+                    $_SESSION["email"] = $row["email"];
+                    $_SESSION["user_role"] = $row["user_role"];
+                    header("location: homepage.php");
+                }
+            }
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
+
+
+
+
+
 
     // now you can use this profile info to create account in your website and make user logged in.
 } else {
