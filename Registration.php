@@ -73,6 +73,8 @@ include "header.php";
 
     <input type="submit" name="registration" value="Register">
 
+    <?php include "redirect.php"; ?>
+
 </form>
 
 <!-- Script to validate if password and confirm password fields are the same -->
@@ -91,6 +93,3 @@ include "header.php";
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
 </script>
-
-
-<?php include "footer.php"; ?>
