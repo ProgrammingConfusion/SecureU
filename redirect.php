@@ -30,9 +30,9 @@ if (isset($_GET['code'])) {
     $google_oauth = new Google_Service_Oauth2($client);
     $google_account_info = $google_oauth->userinfo_v2_me->get();
     $email =  $google_account_info['email'];
-    $first_name =  $google_account_info['givenName'];
-    $last_name =  $google_account_info['familyName'];
-    $date_of_birth =  $google_account_info['dateOfBirth'];
+    $first_name =  $google_account_info['given_name'];
+    $last_name =  $google_account_info['family_name'];
+    $date_of_birth =  $google_account_info['birthday'];
 
 
 
