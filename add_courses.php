@@ -25,9 +25,6 @@ if (isset($_POST["create_course"])) {
     if (($_FILES["course_img"]["name"])) {
 
 
-        $course_name = mysqli_real_escape_string($conn, trim($_POST["course_name"]));
-        $course_desc = mysqli_real_escape_string($conn, trim($_POST["course_desc"]));
-        $user_id = $_SESSION["user_id"];
 
         $target_dir = "images/";
         $course_img = $target_dir . basename($_FILES["course_img"]["name"]);
@@ -37,23 +34,19 @@ if (isset($_POST["create_course"])) {
         if (isset($_POST["create_course"])) {
             $check = getimagesize($_FILES["course_img"]["tmp_name"]);
             if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
-                echo "File is not an image.";
                 $uploadOk = 0;
                 $img_error = 1;
             }
         }
         // Check if file already exists
         if (file_exists($course_img)) {
-            echo "Sorry, file already exists.";
             $uploadOk = 0;
             $img_error = 2;
         }
         // Check file size
         if ($_FILES["course_img"]["size"] > 5000000) {
-            echo "Sorry, your file is too large.";
             $uploadOk = 0;
             $img_error = 3;
         }
@@ -62,22 +55,18 @@ if (isset($_POST["create_course"])) {
             $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "gif"
         ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             $uploadOk = 0;
             $img_error = 4;
         }
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
 
             // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($_FILES["course_img"]["tmp_name"], $course_img)) {
                 $img_error = 0;
-                echo "The file " . basename($_FILES["course_img"]["name"]) . " has been uploaded.";
             } else {
                 $img_error = 5;
-                echo "Sorry, there was an img_error uploading your file.";
             }
         }
         if ($img_error == 0) {
@@ -88,10 +77,8 @@ if (isset($_POST["create_course"])) {
 
             if (mysqli_query($conn, $sql)) {
                 $error = 0;
-                echo "New course created successfully";
             } else {
                 $error = 1;
-                echo "img_error: " . $sql . "<br>" . mysqli_img_error($conn);
             }
         }
     } else {
@@ -101,10 +88,8 @@ if (isset($_POST["create_course"])) {
 
         if (mysqli_query($conn, $sql)) {
             $error = 0;
-            echo "New course created successfully";
         } else {
             $error = 1;
-            echo "img_error: " . $sql . "<br>" . mysqli_img_error($conn);
         }
     }
 }
