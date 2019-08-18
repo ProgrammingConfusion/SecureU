@@ -2,7 +2,7 @@
 
 $page_title = 'Login';
 
-session_start();
+
 
 if (isset($_POST["login"])) {
     require "db_connect.php";
@@ -22,6 +22,7 @@ if (isset($_POST["login"])) {
             if (password_verify($password, $db_password)) {
                 echo "Successful Login";
 
+                session_start();
                 $_SESSION["user_id"] = $row["user_id"];
                 $_SESSION["first_name"] = $row["first_name"];
                 $_SESSION["last_name"] = $row["last_name"];
@@ -55,7 +56,9 @@ include "header.php";
                 <input placeholder="Email..." name="email" class="form-control"><br>
                 <input type="password" placeholder="Password..." name="password" class="form-control"><br>
                 <input type="submit" name="login" value="Log In" class="btn btn-primary">
-                <input type="button" value="Log In With Google" class="btn btn-danger">
+                <?php
+
+                include "redirect.php"; ?>
             </form>
 
         </div>

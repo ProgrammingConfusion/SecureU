@@ -5,6 +5,7 @@
 <?php
 
 session_start();
+
 require_once 'google_client/vendor/autoload.php';
 
 // init configuration
@@ -27,12 +28,13 @@ if (isset($_GET['code'])) {
 
     // get profile info
     $google_oauth = new Google_Service_Oauth2($client);
-    $google_account_info = $google_oauth->userinfo->get();
-    $email =  $google_account_info->email;
-    $name =  $google_account_info->name;
+    $google_account_info = $google_oauth->userinfo_v2_me->get();
+    $email =  $google_account_info['email'];
+    $first_name =  $google_account_info['givenName'];
+    $last_name =  $google_account_info['familyName'];
+    $date_of_birth =  $google_account_info['dateOfBirth'];
 
 
-    //var_dump(get_object_vars($google_oauth));
 
     $username = strstr("$email", "@", true);
 
@@ -59,7 +61,7 @@ if (isset($_GET['code'])) {
 
         //if it does not exist, insert it into the database, and then run the same select query as above,
         $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
-        VALUES (NULL, '$email', '$username', '', '$name', '', '', 'student', CURRENT_TIMESTAMP);";
+        VALUES (NULL, '$email', '$username', '', '$first_name', '$last_name', '$date_of_birth', 'student', CURRENT_TIMESTAMP);";
 
         if (mysqli_query($conn, $sql)) {
             $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -68,6 +70,7 @@ if (isset($_GET['code'])) {
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while ($row = mysqli_fetch_assoc($result)) {
+
                     //assign values to session variables then redirect to homepage
                     $_SESSION["user_id"] = $row["user_id"];
                     $_SESSION["first_name"] = $row["first_name"];
@@ -90,7 +93,6 @@ if (isset($_GET['code'])) {
 
     // now you can use this profile info to create account in your website and make user logged in.
 } else {
-    echo "<a href='" . $client->createAuthUrl() . "'>Google Login</a>";
-    $_SESSION["test"] = "<a href='" . $client->createAuthUrl() . "'>Google Login</a>";
+    echo "<a class=\"btn btn-danger\" href='" . $client->createAuthUrl() . "'>Google Login</a>";
 }
 ?>

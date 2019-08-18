@@ -4,33 +4,40 @@ $page_title = 'Registration';
 
 
 
-
+$error = 0;
 
 if (isset($_POST["registration"])) {
 
     require "db_connect.php";
 
+
     $email = mysqli_real_escape_string($conn, trim($_POST["email"]));
-    $username = mysqli_real_escape_string($conn, trim($_POST["username"]));
-    $password = mysqli_real_escape_string($conn, trim($_POST["password"]));
-    $password = password_hash($password, PASSWORD_DEFAULT);
-    $first_name = mysqli_real_escape_string($conn, trim($_POST["first_name"]));
-    $last_name = mysqli_real_escape_string($conn, trim($_POST["last_name"]));
-    $date_of_birth = $_POST["date_of_birth"];
-    $user_role = mysqli_real_escape_string($conn, trim($_POST["user_role"]));
+    $sql = "SELECT * FROM users WHERE email='$email'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) == 0) {
+
+        $username = mysqli_real_escape_string($conn, trim($_POST["username"]));
+        $password = mysqli_real_escape_string($conn, trim($_POST["password"]));
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $first_name = mysqli_real_escape_string($conn, trim($_POST["first_name"]));
+        $last_name = mysqli_real_escape_string($conn, trim($_POST["last_name"]));
+        $date_of_birth = $_POST["date_of_birth"];
+        $user_role = mysqli_real_escape_string($conn, trim($_POST["user_role"]));
 
 
 
-    $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
-     VALUES (NULL, '$email', '$username', '$password', '$first_name', '$last_name', '$date_of_birth', '$user_role', CURRENT_TIMESTAMP);";
+        $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
+         VALUES (NULL, '$email', '$username', '$password', '$first_name', '$last_name', '$date_of_birth', '$user_role', CURRENT_TIMESTAMP);";
 
-    if (mysqli_query($conn, $sql)) {
-        echo "Thank you for registering.";
+        if (mysqli_query($conn, $sql)) {
+            $error = 2;
+        } else {
+            $error = 3;
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        $error = 1;
     }
-
-    mysqli_close($conn);
 }
 
 include "header.php";
@@ -75,8 +82,35 @@ include "header.php";
 
     <input type="submit" name="registration" value="Register">
 
-    <?php include "redirect.php"; ?>
+    <?php
+    include "redirect.php"; ?>
 
+    <?php if ($error == 1) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        An account with this email address is already registered.
+        <?php
+
+        }
+        ?>
+
+        <?php if ($error == 2) {
+            ?>
+        <div class="alert alert-success" role="alert">
+            Registration Successful. Thank you for registering!
+            <?php
+
+            }
+            ?>
+
+            <?php if ($error == 3) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Registration Failed.
+                <?php
+
+                }
+                ?>
 </form>
 
 <!-- Script to validate if password and confirm password fields are the same -->
