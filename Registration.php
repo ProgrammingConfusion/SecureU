@@ -4,7 +4,7 @@ $page_title = 'Registration';
 
 
 
-$error = 0;
+$error = "";
 
 if (isset($_POST["registration"])) {
 
@@ -31,9 +31,9 @@ if (isset($_POST["registration"])) {
          VALUES (NULL, '$email', '$username', '$password', '$first_name', '$last_name', '$date_of_birth', '$user_role', CURRENT_TIMESTAMP);";
 
         if (mysqli_query($conn, $sql)) {
-            $error = 2;
+            $error = 0;
         } else {
-            $error = 3;
+            $error = 2;
         }
     } else {
         $error = 1;
@@ -89,28 +89,31 @@ include "header.php";
         ?>
     <div class="alert alert-danger" role="alert">
         An account with this email address is already registered.
-        <?php
+    </div>
+    <?php
 
-        }
+    }
+    ?>
+
+    <?php if ($error == 0) {
         ?>
+    <div class="alert alert-success" role="alert">
+        Registration Successful. Thank you for registering!
+    </div>
+    <?php
 
-        <?php if ($error == 2) {
-            ?>
-        <div class="alert alert-success" role="alert">
-            Registration Successful. Thank you for registering!
-            <?php
+    }
+    ?>
 
-            }
-            ?>
+    <?php if ($error == 2) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        Registration Failed.
+    </div>
+    <?php
 
-            <?php if ($error == 3) {
-                ?>
-            <div class="alert alert-danger" role="alert">
-                Registration Failed.
-                <?php
-
-                }
-                ?>
+    }
+    ?>
 </form>
 
 <!-- Script to validate if password and confirm password fields are the same -->
