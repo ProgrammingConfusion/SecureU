@@ -48,6 +48,8 @@ if (isset($_SESSION["attempt_score"])) {
     } else {
         echo "Error updating record: " . mysqli_error($conn);
     }
+} else {
+    header("location: courses.php");
 }
 
 include "header.php";

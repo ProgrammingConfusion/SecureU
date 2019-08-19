@@ -15,6 +15,8 @@ if (isset($_GET["course_id"]) && isset($_GET["unit_id"]) && isset($_GET["quiz_id
     $unit_id = $_GET["unit_id"];
     $quiz_id = $_GET["quiz_id"];
     $instructions_link = "instructions.php?course_id=$course_id&unit_id=$unit_id&quiz_id=$quiz_id";
+} else {
+    header("location: courses.php");
 }
 
 require "db_connect.php";

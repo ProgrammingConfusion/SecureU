@@ -24,6 +24,8 @@ if (isset($_SESSION["attempt_id"])) {
     $quiz_tip_timer = $_SESSION["quiz_tip_timer"];
     $quiz_question_num = $_SESSION["quiz_question_num"];
     $quiz_question_total = $_SESSION["quiz_question_total"];
+} else {
+    header("location: courses.php");
 }
 
 $page_title = "$quiz_name";
@@ -146,20 +148,20 @@ if (strcasecmp($question_type, "Fill in the Blank") == 0) {
     ?>
 
 
-    <h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-    <h4> <?php echo $question_content; ?></h4>
-    <form action="quiz.php" method="post">
-        <input type="text" name="response" value="<?php echo $response; ?>">
-        <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
+<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
+<h4> <?php echo $question_content; ?></h4>
+<form action="quiz.php" method="post">
+    <input type="text" name="response" value="<?php echo $response; ?>">
+    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
                                                                         echo "Submit";
                                                                     } elseif ($button == "continue") {
                                                                         echo "Continue";
                                                                     } ?>">
-    </form>
-    <div><?php echo $feedback_message; ?> </div>
-    <span class="<?php echo $feedback_icon; ?>"></span>
-    <br>
-    <br>
+</form>
+<div><?php echo $feedback_message; ?> </div>
+<span class="<?php echo $feedback_icon; ?>"></span>
+<br>
+<br>
 <?php
 }
 
@@ -172,55 +174,55 @@ elseif (strcasecmp($question_type, "Multiple Choice") == 0) {
     shuffle($answers);
 
     ?>
-    <h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-    <h4> <?php echo $question_content; ?></h4>
-    <form action="quiz.php" method="post">
-        <input type="radio" name="response" id="answer_a" value="<?php echo $answers[0]; ?>">
-        <label for="answer_a"><?php echo $answers[0]; ?></label><br>
+<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
+<h4> <?php echo $question_content; ?></h4>
+<form action="quiz.php" method="post">
+    <input type="radio" name="response" id="answer_a" value="<?php echo $answers[0]; ?>">
+    <label for="answer_a"><?php echo $answers[0]; ?></label><br>
 
-        <input type="radio" name="response" id="answer_b" value="<?php echo $answers[1]; ?>">
-        <label for="answer_b"><?php echo $answers[1]; ?></label><br>
+    <input type="radio" name="response" id="answer_b" value="<?php echo $answers[1]; ?>">
+    <label for="answer_b"><?php echo $answers[1]; ?></label><br>
 
-        <input type="radio" name="response" id="answer_c" value="<?php echo $answers[2]; ?>">
-        <label for="answer_c"><?php echo $answers[2]; ?></label><br>
+    <input type="radio" name="response" id="answer_c" value="<?php echo $answers[2]; ?>">
+    <label for="answer_c"><?php echo $answers[2]; ?></label><br>
 
-        <input type="radio" name="response" id="answer_d" value="<?php echo $answers[3]; ?>">
-        <label for="answer_d"><?php echo $answers[3]; ?></label><br>
+    <input type="radio" name="response" id="answer_d" value="<?php echo $answers[3]; ?>">
+    <label for="answer_d"><?php echo $answers[3]; ?></label><br>
 
-        <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
+    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
                                                                         echo "Submit";
                                                                     } elseif ($button == "continue") {
                                                                         echo "Next Question";
                                                                     } ?>">
-    </form>
-    <div><?php echo $feedback_message; ?> </div>
-    <span class="<?php echo $feedback_icon; ?>"></span>
-    <br>
-    <br>
+</form>
+<div><?php echo $feedback_message; ?> </div>
+<span class="<?php echo $feedback_icon; ?>"></span>
+<br>
+<br>
 
 <?php
 } elseif (strcasecmp($question_type, "True or False") == 0) {
 
     ?>
-    <h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-    <h4> <?php echo $question_content; ?></h4>
-    <form action="quiz.php" method="post">
-        <input type="radio" name="response" id="answer_a" value="<?php echo $answer_a; ?>">
-        <label for="answer_a"><?php echo $answer_a; ?></label><br>
+<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
+<h4> <?php echo $question_content; ?></h4>
+<form action="quiz.php" method="post">
+    <input type="radio" name="response" id="answer_a" value="<?php echo $answer_a; ?>">
+    <label for="answer_a"><?php echo $answer_a; ?></label><br>
 
-        <input type="radio" name="response" id="answer_b" value="<?php echo $answer_b; ?>">
-        <label for="answer_b"><?php echo $answer_b; ?></label><br>
+    <input type="radio" name="response" id="answer_b" value="<?php echo $answer_b; ?>">
+    <label for="answer_b"><?php echo $answer_b; ?></label><br>
 
-        <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
+    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
                                                                         echo "Submit";
                                                                     } elseif ($button == "continue") {
                                                                         echo "Next Question";
                                                                     } ?>">
-    </form>
-    <div><?php echo $feedback_message; ?> </div>
-    <span class="<?php echo $feedback_icon; ?>"></span>
-    <br>
-    <br>
+</form>
+<div><?php echo $feedback_message; ?> </div>
+<span class="<?php echo $feedback_icon; ?>"></span>
+<br>
+<br>
 
 <?php
 } else {

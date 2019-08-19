@@ -9,6 +9,8 @@ if (isset($_GET["course_id"]) && isset($_GET["unit_id"])) {
     $course_id = $_GET["course_id"];
     $unit_id = $_GET["unit_id"];
     $forum_link = "forum.php?course_id=$course_id&unit_id=$unit_id";
+} else {
+    header("location: courses.php");
 }
 require "db_connect.php";
 

@@ -10,7 +10,7 @@ if (!isset($_SESSION["user_id"])) {
 if (isset($_GET["course_id"])) {
     $course_id = $_GET["course_id"];
 } else {
-    echo "No course selected";
+    header("location: courses.php");
     exit();
 }
 $page_title = "Units";
