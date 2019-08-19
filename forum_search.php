@@ -315,7 +315,7 @@ include "header.php";
                 <p class="body-text-3x"></p>
                 <div class="small-search-wrap">
                     <div class="search-form">
-                        <form action="#">
+                        <form action="forum_search.php" method="post">
                             <div class="form-group">
                                 <input type="text" value="" placeholder="Search something here" maxlength="100" class="form-control" name="search_post_field" id="search_post_field">
                             </div>
@@ -333,30 +333,35 @@ include "header.php";
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-
+<div class="container">
+    <div class="row">
         <?php
-        require "db_connect.php";
-        require "custom_functions.php";
-        //$sql = "SELECT * FROM `forum`";
-        $sql = "SELECT * FROM forum, users, units, courses WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
-        $result = mysqli_query($conn, $sql);
+        if (isset($_POST["search_post"])) {
+            require "db_connect.php";
+            require "custom_functions.php";
+            //$sql = "SELECT * FROM `forum`";
+            $sql = "SELECT DISTINCT forum.post_id, forum.post_name, forum.post_content, forum.post_date, forum.user_id, users.username, users.user_img, units.unit_name, courses.course_name FROM forum, users, units, courses WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
+            //$sql = "SELECT DISTINCT forum.post_id, forum.post_name, forum.post_content, forum.post_date, forum.user_id, users.username, users.user_img, units.unit_name, courses.course_name FROM forum, users, units, courses WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
+            $result = mysqli_query($conn, $sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            // output data of each row
-            while ($row = mysqli_fetch_assoc($result)) {
-                $post_id = $row["post_id"];
-                $post_name = $row["post_name"];
-                $post_content = $row["post_content"];
-                $post_date = get_time_ago(strtotime($row["post_date"]));;
-                $post_credits = $row["post_credits"];
-                $user_id = $row["user_id"];
-                $username = $row["username"];
-                $user_img = $row["user_img"];
-                $unit_name = $row["unit_name"];
-                $course_name = $row["course_name"];
+            if (mysqli_num_rows($result) > 0) {
+                // output data of each row
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $post_id = $row["post_id"];
+                    $post_name = $row["post_name"];
+                    $post_content = $row["post_content"];
+                    $post_date = get_time_ago(strtotime($row["post_date"]));;
+                    //$post_credits = $row["post_credits"];
+                    $user_id = $row["user_id"];
+                    $username = $row["username"];
+                    $user_img = $row["user_img"];
+                    $unit_name = $row["unit_name"];
+                    $course_name = $row["course_name"];
 
-                ?>
+                    ?>
 
 
         <div class="col-md-8 left-side-sidebar">
@@ -390,9 +395,10 @@ include "header.php";
 
 
         <?php
+                }
+            } else {
+                echo "0 results";
             }
-        } else {
-            echo "0 results";
         }
         ?>
 

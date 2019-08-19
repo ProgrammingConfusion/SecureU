@@ -7,15 +7,19 @@ if (!isset($_SESSION["user_id"])) {
 
 $page_title = "Q&A Forum";
 
+
 // Code for page goes here
+$redirect = 1;
+
 if (isset($_GET["course_id"]) && isset($_GET["unit_id"])) {
     $course_id = $_GET["course_id"];
     $unit_id = $_GET["unit_id"];
+    $_SESSION["course_id"] = $course_id;
     $_SESSION["unit_id"] = $unit_id;
-    echo $_SESSION["unit_id"];
 } else {
     header("location: forum_search.php");
 }
+
 
 
 
@@ -41,6 +45,8 @@ VALUES (NULL, '$post_name', '$post_content', CURRENT_TIMESTAMP, '', '$unit_id', 
         } else {
             echo "Error updating record: " . mysqli_error($conn);
         }
+
+        header("location: forum.php?course_id=$course_id&unit_id=$unit_id");
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
@@ -346,7 +352,7 @@ include "header.php";
     }
 </style>
 
-<?php include "navbar.php"; ?>
+<!-- <?php include "navbar.php"; ?> -->
 
 <!-- content for the page starts here -->
 
