@@ -13,6 +13,8 @@ if (isset($_GET["course_id"]) && isset($_GET["unit_id"])) {
     $unit_id = $_GET["unit_id"];
     $_SESSION["unit_id"] = $unit_id;
     echo $_SESSION["unit_id"];
+} else {
+    header("location: forum_search.php");
 }
 
 
@@ -30,7 +32,16 @@ if (isset($_POST["create_post"])) {
     $sql = "INSERT INTO `forum` (`post_id`, `post_name`, `post_content`, `post_date`, `post_credits`, `unit_id`, `user_id`) 
 VALUES (NULL, '$post_name', '$post_content', CURRENT_TIMESTAMP, '', '$unit_id', '$user_id');";
 
-    if (mysqli_query($conn, $sql)) { } else {
+    if (mysqli_query($conn, $sql)) {
+
+        $sql = "UPDATE `users` SET `user_credits` = 1 + user_credits WHERE `users`.`user_id` = $user_id;";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . mysqli_error($conn);
+        }
+    } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
 }
@@ -349,6 +360,7 @@ include "header.php";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
+
             // output data of each row
             while ($row = mysqli_fetch_assoc($result)) {
                 $post_id = $row["post_id"];
