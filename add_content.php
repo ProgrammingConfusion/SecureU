@@ -75,6 +75,8 @@ if (isset($_POST["add_content"])) {
             VALUES (NULL, '$content_name', '$content_num', '$content_type', '$content_code', '$content_file', '$unit_id');";
 
 
+
+
             if (mysqli_query($conn, $sql)) {
                 $error = 0;
             } else {
@@ -85,6 +87,8 @@ if (isset($_POST["add_content"])) {
 
         $sql = "INSERT INTO `content` (`content_id`, `content_name`, `content_num`, `content_type`, `content_code`, `content_file`, `unit_id`)
             VALUES (NULL, '$content_name', '$content_num', '$content_type', '$content_code', '', '$unit_id');";
+
+
 
         if (mysqli_query($conn, $sql)) {
             $error = 0;
@@ -157,22 +161,37 @@ $content_code = mysqli_real_escape_string($conn, trim($_POST["content_code"])); 
     <input type="number" min="1" name="content_num"> <br><br>
 
     <p>Content Type</p>
-    <select name="content_type"><br>
+
+
+    <input type="radio" name="content_type" id="video" onclick="show1();" value="Video">
+    <label for="video"> Video </label><br>
+
+    <input type="radio" name="content_type" id="slide" onclick="show1();" value="Slide">
+    <label for="slide"> Slide </label><br>
+
+    <input type="radio" name="content_type" id="pdf" onclick="show2();" value="PDF">
+    <label for="pdf"> PDF </label><br>
+
+    <!-- <select name="content_type"><br>
 
         <option value="Video">Video</option>
         <option value="Slide">Slide</option>
         <option value="PDF">PDF</option>
 
     </select> <br>
+    <br> -->
+
+
+    <div id="content_code">
+        <label for="content_code">Content Source Code</label><br>
+        <textarea name="content_code" cols="30" rows="10"></textarea> <br>
+    </div>
+
     <br>
-
-
-
-    <p>Content Source Code</p>
-    <textarea name="content_code" cols="30" rows="10" onload="myFunction()" id="content_code"> </textarea> <br>
-
-    Content File <br>
-    <input type="file" name="content_file" id="content_file">
+    <div id="content_file">
+        <label for="content_file">Content File</label><br>
+        <input type="file" name="content_file">
+    </div>
     <br>
     <br>
 
@@ -182,86 +201,91 @@ $content_code = mysqli_real_escape_string($conn, trim($_POST["content_code"])); 
 </form>
 <br>
 <br>
-<?php if ($file_error == 0) {
+<div class="container">
+    <?php if ($file_error == 0) {
+        ?>
+    <div class="alert alert-success" role="alert">
+        Content Uploaded.
+    </div>
+    <?php
+
+    }
     ?>
-<div class="alert alert-success" role="alert">
-    Content Uploaded.
-</div>
-<?php
+    <?php if ($file_error == 1) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        File is not a document.
+    </div>
+    <?php
 
-}
-?>
-<?php if ($file_error == 1) {
+    }
     ?>
-<div class="alert alert-danger" role="alert">
-    File is not a document.
-</div>
-<?php
+    <?php if ($file_error == 2) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        Sorry, file already exists.
+    </div>
+    <?php
 
-}
-?>
-<?php if ($file_error == 2) {
+    }
     ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, file already exists.
-</div>
-<?php
+    <?php if ($file_error == 3) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        Sorry, your file is too large.
+    </div>
+    <?php
 
-}
-?>
-<?php if ($file_error == 3) {
+    }
     ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, your file is too large.
-</div>
-<?php
+    <?php if ($file_error == 4) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        Sorry, only PDF files are allowed.
+    </div>
+    <?php
 
-}
-?>
-<?php if ($file_error == 4) {
+    }
     ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, only PDF files are allowed.
-</div>
-<?php
+    <?php if ($file_error == 5) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        Sorry, there was an error uploading your file.
+    </div>
+    <?php
 
-}
-?>
-<?php if ($file_error == 5) {
+    }
     ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, there was an error uploading your file.
-</div>
-<?php
 
-}
-?>
+    <?php if ($error == 0) {
+        ?>
+    <div class="alert alert-success" role="alert">
+        Content Successfully added.
+    </div>
+    <?php
 
-<?php if ($error == 0) {
+    }
     ?>
-<div class="alert alert-success" role="alert">
-    Content Successfully added.
-</div>
-<?php
 
-}
-?>
+    <?php if ($error == 1) {
+        ?>
+    <div class="alert alert-danger" role="alert">
+        Content could not be added successfully.
+    </div>
+    <?php
 
-<?php if ($error == 1) {
+    }
     ?>
-<div class="alert alert-danger" role="alert">
-    Content could not be added successfully.
 </div>
-<?php
-
-}
-?>
 
 <script>
-    function myFunction() {
-        document.getElementById("content_code").defaultValue = <?php if (isset($_POST['content_code'])) echo $_POST['content_code']; ?>;
+    function show1() {
+        document.getElementById('content_file').style.display = 'none';
+        document.getElementById('content_code').style.display = 'block';
+    }
+
+    function show2() {
+        document.getElementById('content_file').style.display = 'block';
+        document.getElementById('content_code').style.display = 'none';
     }
 </script>
-<?php
-include "footer.php";
-?>
