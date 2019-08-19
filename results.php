@@ -28,8 +28,6 @@ if (isset($_SESSION["attempt_score"])) {
     unset($_SESSION["attempt_id"]);
     unset($_SESSION["quiz_question_num"]);
     unset($_SESSION["quiz_question_total"]);
-    unset($_SESSION["course_id"]);
-    unset($_SESSION["unit_id"]);
     unset($_SESSION["quiz_id"]);
 
 

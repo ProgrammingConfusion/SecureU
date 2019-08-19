@@ -49,8 +49,6 @@ if (isset($_POST["instructions"])) {
     if (mysqli_query($conn, $sql)) {
 
         $attempt_id = mysqli_insert_id($conn);
-        $_SESSION["course_id"] = $course_id;
-        $_SESSION["unit_id"] = $unit_id;
         $_SESSION["quiz_id"] = $quiz_id;
         $_SESSION["quiz_name"] = $quiz_name;
         $_SESSION["quiz_tip"] = $quiz_tip;
