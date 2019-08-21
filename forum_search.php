@@ -315,7 +315,7 @@ include "header.php";
                 <p class="body-text-3x"></p>
                 <div class="small-search-wrap">
                     <div class="search-form">
-                        <form action="forum_search.php" method="post">
+                        <form action="forum_search.php" method="get">
                             <div class="form-group">
                                 <input type="text" value="" placeholder="Search something here" maxlength="100" class="form-control" name="search_post_field" id="search_post_field">
                             </div>
