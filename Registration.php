@@ -4,7 +4,7 @@ $page_title = 'Registration';
 
 
 
-$error = "";
+$error = "9";
 
 if (isset($_POST["registration"])) {
 
@@ -74,8 +74,8 @@ include "header.php";
 
     Register as a
     <select name="user_role">
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
+        <option value="Student">Student</option>
+        <option value="Tutor">Tutor</option>
     </select><br>
     <br>
 
