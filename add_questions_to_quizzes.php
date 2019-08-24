@@ -17,6 +17,7 @@ if (isset($_POST["add_questions"])) {
     $quiz_id = mysqli_real_escape_string($conn, trim($_POST["quiz_id"]));
     $question_content = mysqli_real_escape_string($conn, trim($_POST["question_content"]));
     $answer_content = mysqli_real_escape_string($conn, trim($_POST["answer_content"]));
+    $question_credits = mysqli_real_escape_string($conn, trim($_POST["question_credits"]));
     $question_type = mysqli_real_escape_string($conn, trim($_POST["question_type"]));
     $answer_a = mysqli_real_escape_string($conn, trim($_POST["answer_a"]));
     $answer_b = mysqli_real_escape_string($conn, trim($_POST["answer_b"]));
@@ -31,8 +32,8 @@ if (isset($_POST["add_questions"])) {
     //query to add questions to database
 
 
-    $sql = "INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `user_id`) 
-    VALUES (NULL, '$question_type', '$question_content', '$answer_content', '$answer_a', '$answer_b', '$answer_c', '$answer_d', '$user_id');";
+    $sql = "INSERT INTO `questions` (`question_id`, `question_type`, `question_content`, `question_credits`, `answer_content`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `user_id`) 
+    VALUES (NULL, '$question_type', '$question_content', '$question_credits', '$answer_content', '$answer_a', '$answer_b', '$answer_c', '$answer_d', '$user_id');";
 
 
 
@@ -129,8 +130,12 @@ include "header.php";
         <input type="text" name="question_content" placeholder="Enter Question Content"> <br>
         <br>
 
+        Question Credit Value<br>
+        <input type="number" min="1" max="3" name="question_credits" placeholder="Enter Question Credit Value"> <br>
+        <br>
+
         <div id="answer_true_or_false">
-            <label for="answer_true_or_false">True or False</label><br>
+            <label for="answer_true_or_false">Select Corrent Answer: True or False</label><br>
             <select name="answer_content">
                 <option value="True">True</option>
                 <option value="False">False</option>
