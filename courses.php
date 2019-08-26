@@ -15,144 +15,277 @@ include "header.php";
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
 <style>
-    section {
-        padding-top: 4rem;
-        padding-bottom: 5rem;
-        background-color: #f1f4fa;
+    .box20,
+    .box20 .icon li a {
+        overflow: hidden
     }
 
-    .wrap {
-        display: flex;
-        background: white;
-        padding: 1rem 1rem 1rem 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 7px 7px 30px -5px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
+    .box20 {
+        box-shadow: 0 0 5px #a3a3a3
     }
 
-    .wrap:hover {
-        background: linear-gradient(135deg, #6394ff 0%, #0a193b 100%);
-        color: white;
+    .box20 .post,
+    .box20 .title {
+        text-transform: capitalize;
+        width: 60%;
     }
 
-    .ico-wrap {
-        margin: auto;
+    .box20 {
+        position: relative
     }
 
-    .mbr-iconfont {
-        font-size: 4.5rem !important;
-        color: #313131;
-        margin: 1rem;
-        padding-right: 1rem;
+    .box20:after,
+    .box20:before {
+        position: absolute;
+        content: ""
     }
 
-    .vcenter {
-        margin: auto;
+    .box20:before {
+        width: 80%;
+        height: 220%;
+        background: #0062b2;
+        top: -50%;
+        left: -100%;
+        z-index: 1;
+        transform: rotate(25deg);
+        transform-origin: center top 0;
+        transition: all .5s ease 0s
     }
 
-    .mbr-section-title3 {
-        text-align: left;
+    /*.box20.blue:before{background:#0062b2!important;}
+.box20.red:before{background:#b31d23!important;}
+.box20.yellow:before{background:#efc203!important;}*/
+    .box20:hover:before {
+        left: 10%
     }
 
-    h2 {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
+    .box20:after {
+        width: 55%;
+        height: 175%;
+        background-color: rgba(0, 0, 0, .35);
+        bottom: -1000%;
+        left: 53%;
+        transform: rotate(-33deg);
+        transform-origin: center bottom 0;
+        transition: all .8s ease 0s
     }
 
-    .display-5 {
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 1.4rem;
+    .box20 .box-content,
+    .box20 .icon {
+        width: 100%;
+        padding: 0 20px;
+        position: absolute;
+        left: 0;
+        z-index: 2;
+        transition: all 1.1s ease 0s
     }
 
-    .mbr-bold {
-        font-weight: 700;
+    .box20:hover:after {
+        bottom: -70%
     }
 
-    p {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        line-height: 25px;
+    .box20 img {
+        width: 100%;
+        height: auto
     }
 
-    .display-6 {
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 1re
+    .box20 .box-content {
+        top: -100%;
+        color: #fff
     }
 
-    a {
-        color: inherit;
+    .box20:hover .box-content {
+        top: 30px
+    }
+
+    .box20 .title {
+        font-size: 20px;
+        margin: 0
+    }
+
+    .box20 .icon li a,
+    .box20 .post {
+        display: inline-block;
+        font-size: 14px
+    }
+
+    .box20 .post {
+        margin-top: 5px
+    }
+
+    .box20 .icon {
+        list-style: none;
+        margin: 0;
+        bottom: -100%
+    }
+
+    .box20:hover .icon {
+        bottom: 25px
+    }
+
+    .box20 .icon li {
+        display: inline-block
+    }
+
+    .box20 .icon li a {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        background: #ff0000;
+        border-radius: 50%;
+        margin: 0 3px;
+        color: #fff;
+        text-align: center;
+        transition: all .5s ease 0s
+    }
+
+    .box20 .icon li a:hover {
+        background: #fff;
+    }
+
+    .box20 .button {
+        background-color: #8e909b;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-top: 10px;
+    }
+
+    .box20 .button:hover {
+        background-color: #000000;
+    }
+
+    .box20 a,
+    box20 a:link,
+    box20 a:visited,
+    box20 a:hover,
+    box20 a:active {
+        color: #ffffff !important;
+    }
+
+    .icon {
+        display: inline-block;
+        height: 60px;
+        width: auto;
+    }
+
+    .fas {
+        font-size: 32px;
+        background-color: rgba(0, 0, 0, .1);
+        border-radius: 100px;
+        height: 55px;
+        width: 55px;
+        line-height: 55px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .circle-icon {
+        background: rgba(0, 0, 0, .1);
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 50px;
+        vertical-align: middle;
+        padding: 15px;
+    }
+
+    h2.sector {
+        font-size: 26px;
+        color: #555555;
+    }
+
+    .box20 {
+        margin-bottom: 36px;
+    }
+
+    @media only screen and (max-width:990px) {
+        .box20 {
+            margin-bottom: 30px
+        }
+
+        .box20 .title {
+            font-size: 16px
+        }
+    }
+
+    @media only screen and (max-width:479px) {
+        .box20 .title {
+            font-size: 16px
+        }
     }
 </style>
 
 <?php
 include "navbar.php";
 ?>
-<section>
-    <div class="container">
+
+<div class="container mt-40">
+    <h3 class="text-center">Courses</h3>
+    <div class="row mt-30">
+        <?php
+
+        require "db_connect.php";
+
+        $sql = "SELECT * FROM courses";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while ($row = mysqli_fetch_assoc($result)) {
+
+                $course_id = $row["course_id"];
+                $course_name = $row["course_name"];
+                $course_desc = $row["course_desc"];
+                $course_img = $row["course_img"];
+                $course_link = "units.php?course_id=$course_id";
+                ?>
 
 
-        <div class="row mbr-justify-content-center">
-
-
-            <?php
-
-            require "db_connect.php";
-
-            $sql = "SELECT * FROM courses";
-            $result = mysqli_query($conn, $sql);
-
-            if (mysqli_num_rows($result) > 0) {
-                // output data of each row
-                while ($row = mysqli_fetch_assoc($result)) {
-
-                    $course_id = $row["course_id"];
-                    $course_name = $row["course_name"];
-                    $course_desc = $row["course_desc"];
-                    $course_link = "units.php?course_id=$course_id";
-                    ?>
-
-                    <div class="col-lg-6 mbr-col-md-10">
-
-                        <a style="text-decoration:none" href="<?php echo $course_link; ?>">
-                            <div class="wrap">
-
-                                <div class="ico-wrap">
-                                    <span class="fas fa-5x mr-5 fa-user-shield"></span>
-                                </div>
-                                <div class="text-wrap vcenter">
-                                    <h2 class="mbr-fonts-style mbr-bold mbr-section-title3 display-5"><?php echo $course_name; ?></span></h2>
-                                    <p class="mbr-fonts-style text1 mbr-text display-6"><?php echo $course_desc; ?></p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php
-                }
-            } else {
-                echo "0 results";
-            }
-
-            ?>
-
-
-
-
-
-
-
-
+        <div class="col-sm-12 col-md-6">
+            <div class="box20 red">
+                <img src="<?php echo $course_img; ?>" alt="">
+                <div class="box-content">
+                    <i class="fas fa-user-shield circle-icon"></i>
+                    <h3 class="title text-dark"><?php echo $course_name; ?></h3>
+                    <h3 class="title"> <?php echo $course_desc; ?></h3>
+                    <p><a class="button" href="<?php echo $course_link; ?>">Begin Course</a></p>
+                </div>
+            </div>
         </div>
 
+
+
+        <?php
+            }
+        } else {
+            echo "0 results";
+        }
+
+        ?>
+
+
+
+
+
+
+
+
+
     </div>
-
-</section>
-
+</div>
 
 
 
 
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <?php
 include "footer.php"
