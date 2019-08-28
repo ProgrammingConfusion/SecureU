@@ -100,101 +100,139 @@ include "header.php"; ?>
 
 <!-- <?php include "navbar.php"; ?> -->
 
-<h2> Create Course</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 mx-auto">
+            <?php if ($img_error == 0) {
+                ?>
+            <div class="alert alert-success" role="alert">
+                Image Uploaded.
+            </div>
+            <?php
 
-<form action="add_courses.php" method="post" enctype="multipart/form-data"> Course Name <br>
-    <input type="text" name=course_name placeholder=" Enter Course Name"> <br>
-    <br>
+            }
+            ?>
+            <?php if ($img_error == 1) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                File is not an image.
+            </div>
+            <?php
 
-    Course Description <br>
-    <textarea name="course_desc" placeholder="Enter Course Description" cols="30" rows="10"></textarea><br>
-    <br>
+            }
+            ?>
+            <?php if ($img_error == 2) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Sorry, file already exists.
+            </div>
+            <?php
 
-    Course Image <br>
-    <input type="file" name="course_img" id="course_img">
-    <br>
-    <br>
+            }
+            ?>
+            <?php if ($img_error == 3) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Sorry, your file is too large.
+            </div>
+            <?php
 
+            }
+            ?>
+            <?php if ($img_error == 4) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Sorry, only JPG, JPEG, PNG & GIF files are allowed.
+            </div>
+            <?php
 
-    <input type="submit" name="create_course" value="Create Course">
+            }
+            ?>
+            <?php if ($img_error == 5) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Sorry, there was an error uploading your file.
+            </div>
+            <?php
 
+            }
+            ?>
 
-</form>
+            <?php if ($error == 0) {
+                ?>
+            <div class="alert alert-success" role="alert">
+                Course Successfully created.
+            </div>
+            <?php
 
-<?php if ($img_error == 0) {
-    ?>
-<div class="alert alert-success" role="alert">
-    Image Uploaded.
+            }
+            ?>
+
+            <?php if ($error == 1) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Course creation unsuccessful.
+            </div>
+            <?php
+
+            }
+            ?>
+        </div>
+    </div>
 </div>
-<?php
 
-}
-?>
-<?php if ($img_error == 1) {
-    ?>
-<div class="alert alert-danger" role="alert">
-    File is not an image.
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 mx-auto">
+            <div class="registration mx-auto d-block w-100">
+                <div class="page-header text-center">
+                    <h1>Create Course</h1>
+                </div>
+
+                <form action="add_courses.php" method="post" class="form-validate form-horizontal well" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>Create your course here!</legend>
+                        <div class="form-group">
+                            <label for="course_name">CourseName</label>
+                            <input type="text" class="form-control" placeholder=" Enter Course Name" name="course_name" id="course_name" required>
+                        </div>
+                        <div id="content_code" class="form-group">
+                            <label for="course_desc">Course Description</label>
+                            <textarea name="course_desc" id="course_desc" class="form-control" cols="30" rows="10" required></textarea> <br>
+                        </div>
+                        <div id="course_img">
+                            <label for="course_img">Course Image</label><br>
+                            <input type="file" name="course_img" id="course_img" class="form-control-file border">
+                        </div>
+
+
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="form-group d-flex justify-content-start">
+                                <input type="submit" class="btn btn-primary" name="create_course" value="Create Course">
+                            </div>
+
+                            <br>
+                            <br>
+                            <br>
+                            <div>Now Create a unit for your course! <a class="btn btn-primary" href="add_units.php">Create Units</a> </div>
+
+
+
+
+
+                            <br>
+
+
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<?php
 
-}
-?>
-<?php if ($img_error == 2) {
-    ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, file already exists.
-</div>
-<?php
 
-}
-?>
-<?php if ($img_error == 3) {
-    ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, your file is too large.
-</div>
-<?php
-
-}
-?>
-<?php if ($img_error == 4) {
-    ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, only JPG, JPEG, PNG & GIF files are allowed.
-</div>
-<?php
-
-}
-?>
-<?php if ($img_error == 5) {
-    ?>
-<div class="alert alert-danger" role="alert">
-    Sorry, there was an error uploading your file.
-</div>
-<?php
-
-}
-?>
-
-<?php if ($error == 0) {
-    ?>
-<div class="alert alert-success" role="alert">
-    Course Successfully created.
-</div>
-<?php
-
-}
-?>
-
-<?php if ($error == 1) {
-    ?>
-<div class="alert alert-danger" role="alert">
-    Course creation unsuccessful.
-</div>
-<?php
-
-}
-?>
 <a href="add_units.php">Create Units</a>
 
 
