@@ -1,10 +1,6 @@
-
-
-
-
 <?php
 
-session_start();
+
 
 require_once 'google_client/vendor/autoload.php';
 
@@ -49,6 +45,7 @@ if (isset($_GET['code'])) {
         // output data of each row
         while ($row = mysqli_fetch_assoc($result)) {
             //if it exists assign all db data to session variables and redirect to homepage
+            session_start();
             $_SESSION["user_id"] = $row["user_id"];
             $_SESSION["first_name"] = $row["first_name"];
             $_SESSION["last_name"] = $row["last_name"];
@@ -61,7 +58,7 @@ if (isset($_GET['code'])) {
 
         //if it does not exist, insert it into the database, and then run the same select query as above,
         $sql = "INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `first_name`, `last_name`, `user_dob`, `user_role`, `reg_date`)
-        VALUES (NULL, '$email', '$username', '', '$first_name', '$last_name', '$date_of_birth', 'student', CURRENT_TIMESTAMP);";
+        VALUES (NULL, '$email', '$username', '', '$first_name', '$last_name', '$date_of_birth', 'Student', CURRENT_TIMESTAMP);";
 
         if (mysqli_query($conn, $sql)) {
             $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -72,6 +69,7 @@ if (isset($_GET['code'])) {
                 while ($row = mysqli_fetch_assoc($result)) {
 
                     //assign values to session variables then redirect to homepage
+                    session_start();
                     $_SESSION["user_id"] = $row["user_id"];
                     $_SESSION["first_name"] = $row["first_name"];
                     $_SESSION["last_name"] = $row["last_name"];
@@ -93,6 +91,10 @@ if (isset($_GET['code'])) {
 
     // now you can use this profile info to create account in your website and make user logged in.
 } else {
-    echo "<a class=\"btn btn-danger\" href='" . $client->createAuthUrl() . "'>Google Login</a>";
-}
-?>
+    ?>
+<div class="form-check form-group d-flex justify-content-center">
+    <?php
+
+        echo "<a class=\"btn btn-success\" href='" . $client->createAuthUrl() . "'>Google Login</a>";
+    }
+    ?> </div>
