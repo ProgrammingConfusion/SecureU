@@ -79,9 +79,7 @@ if (isset($_POST["submit"])) {
     $sql = "INSERT INTO `quiz_responses` (`response_id`, `response_score`, `quiz_question_id`, `attempt_id`)
      VALUES (NULL, '$correct', '$quiz_question_id', '$attempt_id');";
 
-    if (mysqli_query($conn, $sql)) {
-        echo "New record created successfully";
-    } else {
+    if (mysqli_query($conn, $sql)) { } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
 }
@@ -146,22 +144,42 @@ include "header.php";
 if (strcasecmp($question_type, "Fill in the Blank") == 0) {
 
     ?>
+<div class="container">
+    <h1>Quiz</h1>
+    <div class="card">
+        <h5 class="card-title card-header"><?php echo $question_content; ?></h5>
 
 
-<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-<h4> <?php echo $question_content; ?></h4>
-<form action="quiz.php" method="post">
-    <input type="text" name="response" value="<?php echo $response; ?>">
-    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
-                                                                        echo "Submit";
-                                                                    } elseif ($button == "continue") {
-                                                                        echo "Continue";
-                                                                    } ?>">
-</form>
-<div><?php echo $feedback_message; ?> </div>
-<span class="<?php echo $feedback_icon; ?>"></span>
-<br>
-<br>
+
+        <form action="quiz.php" method="post">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-group">
+                        <label for="">Type your answer:</label>
+                        <input type="text" name="response" value="<?php echo $response; ?>">
+                    </div>
+
+                </li>
+                <li class="list-group-item">
+                    <div><?php echo $feedback_message; ?>
+                        <span class="<?php echo $feedback_icon; ?>"></span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="card-body">
+                <input type="submit" name="<?php echo $button; ?>" class=" btn btn-primary" value="<?php if ($button == "submit") {
+                                                                                                            echo "Submit";
+                                                                                                        } elseif ($button == "continue") {
+                                                                                                            echo "Continue";
+                                                                                                        } ?>">
+                Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?>
+        </form>
+    </div>
+</div>
+</div>
+
+
 <?php
 }
 
@@ -174,55 +192,105 @@ elseif (strcasecmp($question_type, "Multiple Choice") == 0) {
     shuffle($answers);
 
     ?>
-<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-<h4> <?php echo $question_content; ?></h4>
-<form action="quiz.php" method="post">
-    <input type="radio" name="response" id="answer_a" value="<?php echo $answers[0]; ?>">
-    <label for="answer_a"><?php echo $answers[0]; ?></label><br>
 
-    <input type="radio" name="response" id="answer_b" value="<?php echo $answers[1]; ?>">
-    <label for="answer_b"><?php echo $answers[1]; ?></label><br>
+<div class="container">
+    <h1>Quiz</h1>
+    <div class="card">
+        <h5 class="card-title card-header"><?php echo $question_content; ?></h5>
 
-    <input type="radio" name="response" id="answer_c" value="<?php echo $answers[2]; ?>">
-    <label for="answer_c"><?php echo $answers[2]; ?></label><br>
 
-    <input type="radio" name="response" id="answer_d" value="<?php echo $answers[3]; ?>">
-    <label for="answer_d"><?php echo $answers[3]; ?></label><br>
 
-    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
-                                                                        echo "Submit";
-                                                                    } elseif ($button == "continue") {
-                                                                        echo "Next Question";
-                                                                    } ?>">
-</form>
-<div><?php echo $feedback_message; ?> </div>
-<span class="<?php echo $feedback_icon; ?>"></span>
-<br>
-<br>
+        <form action="quiz.php" method="post">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" name="response" id="answer_a" class="custom-control-input" value="<?php echo $answers[0]; ?>">
+                        <label class="custom-control-label" for="answer_a"><?php echo $answers[0]; ?></label><br>
+                    </div>
+
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" name="response" id="answer_b" class="custom-control-input" value="<?php echo $answers[1]; ?>">
+                        <label class="custom-control-label" for="answer_b"><?php echo $answers[1]; ?></label><br>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" name="response" id="answer_c" class="custom-control-input" value="<?php echo $answers[2]; ?>">
+                        <label class="custom-control-label" for="answer_c"><?php echo $answers[2]; ?></label><br>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" name="response" id="answer_d" class="custom-control-input" value="<?php echo $answers[3]; ?>">
+                        <label class="custom-control-label" for="answer_d"><?php echo $answers[3]; ?></label><br>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div><?php echo $feedback_message; ?>
+                        <span class="<?php echo $feedback_icon; ?>"></span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="card-body">
+                <input type="submit" name="<?php echo $button; ?>" class=" btn btn-primary" value="<?php if ($button == "submit") {
+                                                                                                            echo "Submit";
+                                                                                                        } elseif ($button == "continue") {
+                                                                                                            echo "Continue";
+                                                                                                        } ?>">
+                Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?>
+        </form>
+    </div>
+</div>
+</div>
+
 
 <?php
 } elseif (strcasecmp($question_type, "True or False") == 0) {
 
     ?>
-<h3>Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?></h3>
-<h4> <?php echo $question_content; ?></h4>
-<form action="quiz.php" method="post">
-    <input type="radio" name="response" id="answer_a" value="<?php echo $answer_a; ?>">
-    <label for="answer_a"><?php echo $answer_a; ?></label><br>
 
-    <input type="radio" name="response" id="answer_b" value="<?php echo $answer_b; ?>">
-    <label for="answer_b"><?php echo $answer_b; ?></label><br>
+<div class="container">
+    <h1>Quiz</h1>
+    <div class="card">
+        <h5 class="card-title card-header"><?php echo $question_content; ?></h5>
 
-    <input type="submit" name="<?php echo $button; ?>" value="<?php if ($button == "submit") {
-                                                                        echo "Submit";
-                                                                    } elseif ($button == "continue") {
-                                                                        echo "Next Question";
-                                                                    } ?>">
-</form>
-<div><?php echo $feedback_message; ?> </div>
-<span class="<?php echo $feedback_icon; ?>"></span>
-<br>
-<br>
+
+
+        <form action="quiz.php" method="post">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" name="response" id="answer_a" class="custom-control-input" value="<?php echo $answer_a; ?>">
+                        <label class="custom-control-label" for="answer_a"><?php echo $answer_a; ?></label><br>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" name="response" id="answer_b" class="custom-control-input" value="<?php echo $answer_b; ?>">
+                        <label class="custom-control-label" for="answer_b"><?php echo $answer_b; ?></label><br>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div><?php echo $feedback_message; ?>
+                        <span class="<?php echo $feedback_icon; ?>"></span>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="card-body">
+                <input type="submit" name="<?php echo $button; ?>" class=" btn btn-primary" value="<?php if ($button == "submit") {
+                                                                                                            echo "Submit";
+                                                                                                        } elseif ($button == "continue") {
+                                                                                                            echo "Continue";
+                                                                                                        } ?>">
+                Question <?php echo $quiz_question_num; ?> out of <?php echo $quiz_question_total; ?>
+        </form>
+    </div>
+</div>
+</div>
+
 
 <?php
 } else {

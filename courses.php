@@ -218,6 +218,16 @@ include "header.php";
             font-size: 16px
         }
     }
+
+    .img {
+        position: relative;
+        float: left;
+        width: 500px;
+        height: 300px;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 </style>
 
 <?php
@@ -247,8 +257,8 @@ include "navbar.php";
 
 
         <div class="col-sm-12 col-md-6">
-            <div class="box20 red">
-                <img src="<?php echo $course_img; ?>" alt="">
+            <div class="box20 red img">
+                <img src="<?php echo $course_img; ?>" alt="course image">
                 <div class="box-content">
                     <i class="fas fa-user-shield circle-icon"></i>
                     <h3 class="title text-dark"><?php echo $course_name; ?></h3>

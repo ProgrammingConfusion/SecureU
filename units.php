@@ -29,7 +29,12 @@ include "header.php";
 
 <!-- content for the page starts here -->
 
+
 <div class="container">
+    <h1>Units</h1>
+    <br>
+    <br>
+
 
     <?php
 
@@ -49,9 +54,9 @@ include "header.php";
             $unit_link = "content.php?course_id=$course_id&unit_id=$unit_id";
             ?>
 
-    <div class="card">
-        <div class="card-body ">
-            <h3 class="card-title"><?php echo $unit_name; ?></h3>
+    <div class="card border-primary">
+        <h3 class="card-header card-title"><?php echo $unit_name; ?></h3>
+        <div class="card-body">
             <p class="card-text"> <?php echo $unit_desc; ?></p>
             <a class="btn btn-primary" href="<?php echo $unit_link; ?>">Select</a>
 

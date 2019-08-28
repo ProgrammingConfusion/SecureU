@@ -77,8 +77,7 @@ include "header.php";
 
 <!-- content for the page starts here -->
 
-<h3> <?php echo $quiz_name; ?></h3>
-<div> <?php echo $quiz_desc; ?></div>
+
 
 
 
@@ -105,10 +104,27 @@ if (mysqli_num_rows($result) > 0) {
 
     ?>
 
-<div>You last attempted this quiz <?php echo $attempt_date; ?></div>
-<div>Time elapsed - <?php echo $attempt_time_elapsed; ?></div>
-<div>Score achieved - <?php echo $attempt_score; ?> out of <?php echo $quiz_question_total; ?> </div>
-<div>Credits earned - <?php echo $attempt_credits; ?></div>
+<div class="container">
+    <h1>Previous Results</h1>
+    <div class="card">
+        <h5 class="card-title card-header"><?php echo $quiz_name; ?></h5>
+        <div class="card-body">
+            <p class="card-text"><?php echo $quiz_desc; ?></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">You last attempted this quiz <?php echo $attempt_date; ?></li>
+            <li class="list-group-item">Time elapsed - <?php echo $attempt_time_elapsed; ?></li>
+            <li class="list-group-item">Score achieved - <?php echo $attempt_score; ?> out of <?php echo $quiz_question_total; ?></li>
+            <li class="list-group-item">Credits earned - <?php echo $attempt_credits; ?></li>
+        </ul>
+        <div class="card-body">
+            <form action="<?php echo $instructions_link; ?>" method="post">
+                <input class="btn btn-primary btn-lg" type="submit" value="Begin Quiz" name="instructions">
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <?php
 } else {
@@ -121,7 +137,3 @@ if (mysqli_num_rows($result) > 0) {
 
 
 ?>
-
-<form action="<?php echo $instructions_link; ?>" method="post">
-    <input class="btn btn-primary btn-lg" type="submit" value="Begin Quiz" name="instructions">
-</form>

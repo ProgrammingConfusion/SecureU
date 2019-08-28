@@ -57,6 +57,15 @@ include "header.php";
 <?php include "navbar.php"; ?>
 
 <!-- content for the page starts here -->
+<div class="container">
+    <h1>Results</h1>
+    <div class="card">
+        <h5 class="card-title card-header">Here are your results!</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Your final score is <?php echo $attempt_score; ?> out of <?php echo $quiz_question_total; ?></li>
+            <li class="list-group-item">Credits earned: <?php echo $attempt_credits; ?></li>
+            <li class="list-group-item"><a href="courses.php" class="btn btn-primary">Back to Courses</a></li>
+        </ul>
 
-<h1>Your final score is <?php echo $attempt_score; ?> out of <?php echo $quiz_question_total; ?> </h1>
-<h1>Credits earned: <?php echo $attempt_credits; ?></h1>
+    </div>
+</div>

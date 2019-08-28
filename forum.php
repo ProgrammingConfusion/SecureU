@@ -357,6 +357,7 @@ include "header.php";
 <!-- content for the page starts here -->
 
 <div class="container">
+    <h1> Q&A Forum</h1>
     <div class="row">
         <?php
         require "db_connect.php";
@@ -434,7 +435,7 @@ include "header.php";
 
                 <div class="form-group">
                     <label for="post_name">Post Title<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" placeholder="Enter post title." name="post_name" />
+                    <input type="text" class="form-control" placeholder="Enter post title." name="post_name" required>
                 </div>
 
                 <div class="form-group">
@@ -447,7 +448,7 @@ include "header.php";
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" name="create_post" value="Post" class="btn btn-primary">
+                    <input type="submit" name="create_post" value="Post" class="btn btn-primary" required>
                 </div>
 
             </form>

@@ -343,7 +343,10 @@ include "header.php";
             require "db_connect.php";
             require "custom_functions.php";
             //$sql = "SELECT * FROM `forum`";
-            $sql = "SELECT DISTINCT forum.post_id, forum.post_name, forum.post_content, forum.post_date, forum.user_id, users.username, users.user_img, units.unit_name, courses.course_name FROM forum, users, units, courses WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
+            $sql = "SELECT DISTINCT forum.post_id, forum.post_name, forum.post_content, forum.post_date, forum.user_id, users.username, users.user_img, units.unit_name, courses.course_name
+            FROM forum, users, units, courses
+            WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name 
+            LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
             //$sql = "SELECT DISTINCT forum.post_id, forum.post_name, forum.post_content, forum.post_date, forum.user_id, users.username, users.user_img, units.unit_name, courses.course_name FROM forum, users, units, courses WHERE forum.user_id = users.user_id AND forum.unit_id = units.unit_id AND courses.course_id = units.course_id AND forum.post_name LIKE '%$search_post_field%' OR forum.post_content LIKE '%$search_post_field%'";
             $result = mysqli_query($conn, $sql);
 

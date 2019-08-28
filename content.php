@@ -51,12 +51,88 @@ include "header.php";
 ?>
 <!-- page specific styling goes here -->
 
+<style>
+    @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
+    .card .card-image {
+        overflow: hidden;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+
+
+    .card {
+        margin-top: 10px;
+        position: relative;
+        -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        box-shadow: 4 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .card .card-content {
+        padding: 10px;
+    }
+
+    .card .card-content .card-title,
+    .card-reveal .card-title {
+        font-size: 24px;
+        font-weight: 200;
+    }
+
+    .card .card-action {
+        padding: 20px;
+        border-top: 1px solid rgba(160, 160, 160, 0.2);
+    }
+
+    .card .card-action a {
+        font-size: 15px;
+        color: #ffab40;
+        text-transform: uppercase;
+        margin-right: 20px;
+        -webkit-transition: color 0.3s ease;
+        -moz-transition: color 0.3s ease;
+        -o-transition: color 0.3s ease;
+        -ms-transition: color 0.3s ease;
+        transition: color 0.3s ease;
+    }
+
+    .card .card-action a:hover {
+        color: #ffd8a6;
+        text-decoration: none;
+    }
+
+    .card .card-reveal {
+        padding: 20px;
+        position: absolute;
+        background-color: #FFF;
+        width: 100%;
+        overflow-y: auto;
+        /*top: 0;*/
+        left: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: 1;
+        display: none;
+    }
+
+    .card .card-reveal p {
+        color: rgba(0, 0, 0, 0.71);
+        margin: 20px;
+    }
+
+    .btn-custom {
+        background-color: transparent;
+        font-size: 18px;
+    }
+</style>
+
 <?php include "navbar.php"; ?>
 
 <!-- content for the page starts here -->
 
-
-<a class="btn btn-primary" href="<?php echo $forum_link; ?>">Forum</a>
 
 <?php
 
@@ -78,78 +154,132 @@ if ($content = "content") {
             if (strcasecmp($content_type, "Video") == 0) {
 
                 ?>
-<h1><?php echo $content_name; ?></h1>
-
-<p><?php echo $content_code; ?> </p>
-<?php
-            }
-            ?>
-<?php
-            if (strcasecmp($content_type, "Slide") == 0) {
-
-                ?>
-<h1><?php echo $content_name; ?></h1>
-
-<p><?php echo $content_code; ?> </p>
-<?php
-            }
-            ?>
-
-<?php
-            if (strcasecmp($content_type, "PDF") == 0) {
-
-                ?>
-<h1><?php echo $content_name; ?></h1>
-
-<div><embed src="<?php echo $content_file; ?>" type="application/pdf" width="75%" height="600px" /></div>
-<?php
-            }
-            ?>
-
-
-
-
-
-
-
-<?php
-        }
-    }
-} else {
-    echo "0 results";
-}
-?>
 <div class="container">
-    <?php
-    if ($content = "quiz") {
-        $sql = "SELECT * FROM `quizzes` WHERE unit_id = $unit_id";
-        $result = mysqli_query($conn, $sql);
+    <div class="row">
+        <div class="col-md-6 ">
+            <div class="card">
+                <div class="card-image">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <?php echo $content_code; ?>
+                    </div>
 
-        if (mysqli_num_rows($result) > 0) {
-            // output data of each row
-            while ($row = mysqli_fetch_assoc($result)) {
-                $quiz_id = $row["quiz_id"];
-                $quiz_name = $row["quiz_name"];
-                $quiz_desc = $row["quiz_desc"];
-                $quiz_link = "instructions.php?course_id=$course_id&unit_id=$unit_id&quiz_id=$quiz_id";
+                </div><!-- card image -->
 
-                ?>
-    <div class="card">
-        <div class="card-body ">
-            <h3 class="card-title"><?php echo $quiz_name; ?></h3>
-            <p class="card-text"> <?php echo $quiz_desc; ?></p>
-            <a class="btn btn-primary" href="<?php echo $quiz_link; ?>">Select</a>
+                <div class="card-content">
+                    <span class="card-title font-weight-bold"><?php echo $content_name; ?></span>
 
-        </div>
-    </div>
+                </div><!-- card content -->
 
 
+            </div>
+            <br>
+            <br>
+            <br>
 
-    <?php
+            <?php
+                        }
+                        ?>
+            <?php
+                        if (strcasecmp($content_type, "Slide") == 0) {
+
+                            ?>
+
+
+            <h1><?php echo $content_name; ?></h1>
+
+            <p><?php echo $content_code; ?> </p>
+            <?php
+                        }
+                        ?>
+
+            <?php
+                        if (strcasecmp($content_type, "PDF") == 0) {
+
+                            ?>
+            <div class="container">
+                <div class="row">
+                    <div class="col ">
+                        <div class="card">
+                            <div class="card-image">
+                                <div><embed src="<?php echo $content_file; ?>" type="application/pdf" width="560px" height="560px" /></div>
+
+                            </div><!-- card image -->
+
+                            <div class="card-content">
+                                <span class="card-title font-weight-bold"><?php echo $content_name; ?></span>
+
+                            </div><!-- card content -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+
+
+            <?php
+                        }
+                        ?>
+
+
+
+
+
+
+
+            <?php
+                    }
+                }
+            } else {
+                echo "There is no Learning Content or Quiz for this unit yet";
             }
-        }
-    } else {
-        echo "No quiz found.";
-    }
-    ?>
-</div>
+            ?>
+
+            <div class="container">
+                <?php
+                if ($content = "quiz") {
+                    $sql = "SELECT * FROM `quizzes` WHERE unit_id = $unit_id";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        // output data of each row
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $quiz_id = $row["quiz_id"];
+                            $quiz_name = $row["quiz_name"];
+                            $quiz_desc = $row["quiz_desc"];
+                            $quiz_link = "instructions.php?course_id=$course_id&unit_id=$unit_id&quiz_id=$quiz_id";
+
+                            ?>
+                <div class="card border-primary">
+                    <h3 class="card-title card-header"><?php echo $quiz_name; ?></h3>
+                    <div class="card-body ">
+                        <p class="card-text"> <?php echo $quiz_desc; ?></p>
+                        <a class="btn btn-primary" href="<?php echo $quiz_link; ?>">Select</a>
+
+                    </div>
+                </div>
+
+
+
+                <?php
+                        }
+                    }
+                } else {
+                    echo "No quiz found.";
+                }
+                ?>
+
+            </div> <br><br>
+            <div class="container">
+
+
+                <div class="font-weight-bold"> Visit the Q&A forum if you have a question!
+                    <a class=" btn btn-primary" href="<?php echo $forum_link; ?>">Visit Forum</a>
+                </div>
+
+            </div>
