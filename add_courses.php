@@ -212,10 +212,7 @@ include "header.php"; ?>
                                 <input type="submit" class="btn btn-primary" name="create_course" value="Create Course">
                             </div>
 
-                            <br>
-                            <br>
-                            <br>
-                            <div>Now Create a unit for your course! <a class="btn btn-primary" href="add_units.php">Create Units</a> </div>
+
 
 
 
@@ -225,6 +222,10 @@ include "header.php"; ?>
 
 
                         </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div>Now Create a unit for your course! <a class="btn btn-primary" href="add_units.php">Create Units</a> </div>
                     </fieldset>
                 </form>
             </div>

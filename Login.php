@@ -2,7 +2,7 @@
 
 $page_title = 'Login';
 
-
+$error = "9";
 
 if (isset($_POST["login"])) {
     require "db_connect.php";
@@ -20,7 +20,7 @@ if (isset($_POST["login"])) {
             $db_password = $row["password"];
 
             if (password_verify($password, $db_password)) {
-                echo "Successful Login";
+                $error = "0";
 
                 session_start();
                 $_SESSION["user_id"] = $row["user_id"];
@@ -31,11 +31,11 @@ if (isset($_POST["login"])) {
                 $_SESSION["user_role"] = $row["user_role"];
                 header("location: homepage.php");
             } else {
-                echo "Incorrect login credentials";
+                $error = "1";
             }
         }
     } else {
-        echo "No account with that email address exists.";
+        $error = "2";
     }
 }
 
@@ -48,23 +48,67 @@ include "header.php";
 <!-- content for the page starts here -->
 
 
-<div class="container" style="margin-top: 100px">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-offset-3" align="center">
 
-            <form action="Login.php" method="post">
-                <input placeholder="Email..." name="email" class="form-control"><br>
-                <input type="password" placeholder="Password..." name="password" class="form-control"><br>
-                <input type="submit" name="login" value="Log In" class="btn btn-primary">
-                <?php
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 mx-auto">
+            <?php if ($error == 1) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                Please enter the correct password.
+            </div>
+            <?php
 
-                include "redirect.php"; ?>
-            </form>
+            }
+            ?>
 
+            <?php if ($error == 0) {
+                ?>
+            <div class="alert alert-success" role="alert">
+                Login Successful.
+            </div>
+            <?php
+
+            }
+            ?>
+
+            <?php if ($error == 2) {
+                ?>
+            <div class="alert alert-danger" role="alert">
+                There is no account with that email, please register an account.
+            </div>
+            <?php
+
+            }
+            ?>
+            <h1>Log in</h1>
+            <br>
+            <div class="registration mx-auto d-block w-100">
+                <form action="Login.php" method="post">
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" class="form-control" placeholder="Enter your email" name="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" class="form-control" placeholder="Enter your password" name="password" id="password" required>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="form-group d-flex justify-content-start">
+                            <input type="submit" class="btn btn-primary" name="login" value="Login">
+                        </div>
+
+                        <div class="form-check form-group d-flex justify-content-center">
+                            <a class="btn btn-primary" href="login.php">Register instead</a>
+                        </div>
+                        <?php
+                        include "redirect.php"; ?>
+
+                    </div>
+            </div>
         </div>
     </div>
-</div>
 
 
 
-<?php include "footer.php"; ?>
+    <?php include "footer.php"; ?>
