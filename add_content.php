@@ -249,6 +249,7 @@ $content_code = mysqli_real_escape_string($conn, trim($_POST["content_code"])); 
                             <label for="content_num">Enter Content Number*</label>
                             <input type="number" min="1" name="content_num" class="form-control" id=content_num required> <br>
                         </div>
+                        <label for="">Select Content Type*</label>
                         <div class="custom-control custom-radio">
                             <input type="radio" name="content_type" id="video" class="custom-control-input" onclick="show1();" value="Video" required>
                             <label for="video" class="custom-control-label"> Video </label><br>
@@ -280,6 +281,7 @@ $content_code = mysqli_real_escape_string($conn, trim($_POST["content_code"])); 
 
                         </div>
                     </fieldset>
+                    <div>If you think you have enough content, try making a quiz! <a class="btn btn-primary" href="add_quizzes.php">Create Quiz</a> </div>
                 </form>
             </div>
         </div>

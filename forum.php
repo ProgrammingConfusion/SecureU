@@ -440,7 +440,7 @@ include "header.php";
 
                 <div class="form-group">
                     <label for="post_content">Post<span class="text-danger">*</span></label>
-                    <textarea rows="5" class="form-control" placeholder="Post your question or response here." name="post_content"></textarea>
+                    <textarea rows="5" class="form-control" placeholder="Post your question or response here." name="post_content" required></textarea>
                 </div>
 
                 <div class="form-group">

@@ -99,7 +99,7 @@ include "header.php";
                         </div>
 
                         <div class="form-check form-group d-flex justify-content-center">
-                            <a class="btn btn-primary" href="login.php">Register instead</a>
+                            <a class="btn btn-primary" href="registration.php">Register instead</a>
                         </div>
                         <?php
                         include "redirect.php"; ?>

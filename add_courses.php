@@ -98,7 +98,7 @@ if (isset($_POST["create_course"])) {
 
 include "header.php"; ?>
 
-<!-- <?php include "navbar.php"; ?> -->
+<?php include "navbar.php"; ?>
 
 <div class="container">
     <div class="row">

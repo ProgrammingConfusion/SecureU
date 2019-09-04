@@ -130,7 +130,25 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     ?>
 
-<div>You have not yet attempted this quiz. Good Luck!</div>
+<div class="container">
+    <h1>Previous Results</h1>
+    <div class="card">
+        <h5 class="card-title card-header"><?php echo $quiz_name; ?></h5>
+        <div class="card-body">
+            <p class="card-text"><?php echo $quiz_desc; ?></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">You have not yet attempted this quiz</li>
+
+        </ul>
+        <div class="card-body">
+            <form action="<?php echo $instructions_link; ?>" method="post">
+                <input class="btn btn-primary btn-lg" type="submit" value="Begin Quiz" name="instructions">
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <?php
 }
