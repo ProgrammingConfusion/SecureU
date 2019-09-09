@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $user = "root";
-$password = "root";
+$password = "";
 $dbname = "secureu";
 
 // Create connection
